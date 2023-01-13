@@ -141,6 +141,14 @@ public class PlayerController : MonoBehaviour
         Debug.Log($"controls changed to {_playerInput.currentControlScheme}");
     }
 
+    void OnInteract()
+    {
+        Debug.Log("Interact");
+        if (_interactionTarget == null)
+            return; //TODO maybe play animation ?
+        _interactionTarget.Interact();
+    }
+    
     private void OnTriggerEnter(Collider other)
     {
         // Debug.Log($"Pepperping {other.name}");

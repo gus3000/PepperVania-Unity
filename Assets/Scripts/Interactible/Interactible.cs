@@ -29,4 +29,6 @@ public abstract class Interactible : MonoBehaviour
         Debug.Log("Interactible collider exit");
         CanInteract = false;
     }
+
+    public abstract void Interact();
 }
