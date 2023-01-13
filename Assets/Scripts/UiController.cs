@@ -2,69 +2,37 @@
 using System.Collections;
 using System.Collections.Generic;
 using DefaultNamespace;
+using UI;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Serialization;
 
 public class UiController : MonoBehaviour
 {
-    [SerializeField] private CanvasGroup controlsTutorial;
-    [SerializeField] private bool triggerShowControls;
-    [SerializeField] private bool triggerHideControls;
     [SerializeField] private float fadeTime = 1;
+
+    [SerializeField] private FadeInOut controlsTutorial;
+    [SerializeField] private float showControlsTimer = 2;
+    [SerializeField] private FadeInOut interactUi;
+
     private PlayerController _player;
     private Coroutine _currentCoroutine;
+    private GameController _gameController;
 
     private void Start()
     {
         _player = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
-        controlsTutorial.alpha = 0;
+        _gameController = GameObject.FindWithTag("GameController").GetComponent<GameController>();
+        controlsTutorial.ShouldShow = () => (Time.time - _gameController.StartTime > showControlsTimer) && !_player.HasMoved;
+        interactUi.ShouldShow = () => _player.InteractionTarget != null;
     }
 
     private void Update()
     {
-        if (triggerShowControls)
-        {
-            triggerShowControls = false;
-            ToggleControls(true);
-        }
-
-        if (triggerHideControls)
-        {
-            triggerHideControls = false;
-            ToggleControls(false);
-        }
+        // if(ShouldShowControlsPanel && !_controlsShowing)
+            // ShowControls();
+        // else if(ShouldHideControlsPanel && _controlsShowing)
+            // HideControls();
     }
-
-    private void ToggleControls(bool enable)
-    {
-        // StartCoroutine(ShowControls());
-        // StartCoroutine(HideControls());
-        if (_currentCoroutine != null)
-            StopCoroutine(_currentCoroutine);
-        if (enable)
-            _currentCoroutine = StartCoroutine(SetAlphaTo(controlsTutorial, 1));
-        else
-            _currentCoroutine = StartCoroutine(SetAlphaTo(controlsTutorial, 0));
-    }
-
-    private IEnumerator SetAlphaTo(CanvasGroup group, float alpha)
-    {
-        var diff = alpha - controlsTutorial.alpha;
-        while (Mathf.Abs(controlsTutorial.alpha - alpha) > Time.smoothDeltaTime)
-        {
-            controlsTutorial.alpha += Mathf.Sign(diff) * Time.deltaTime / fadeTime;
-            yield return null;
-        }
-    }
-
-    public void ShowControls()
-    {
-        ToggleControls(true);
-    }
-
-    public void HideControls()
-    {
-        ToggleControls(false);
-    }
+    
 }

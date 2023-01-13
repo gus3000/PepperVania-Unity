@@ -30,3 +30,5 @@ jobs:
           branch: gh-pages # The branch the action should deploy to.
           folder: build/WebGL/WebGL
           target-folder: ${{ env.RELEASE_VERSION }}
+permissions:
+  contents: write

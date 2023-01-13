@@ -28,7 +28,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float _baseDashDuration;
     [SerializeField] private bool _isDashing;
     [SerializeField] private float _timeSinceLastDash = 0;
-    [SerializeField] private GameObject _interactionTarget = null;
+    [SerializeField] private Interactible _interactionTarget = null;
 
 
     private static readonly int SpeedAnimHash = Animator.StringToHash("speed");
@@ -143,21 +143,23 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log($"Pepperping {other.name}");
-        if (!other.CompareTag("Interactable"))
+        // Debug.Log($"Pepperping {other.name}");
+        if (!other.CompareTag("Interactible"))
             return;
-        _interactionTarget = other.gameObject;
+        _interactionTarget = other.gameObject.GetComponent<Interactible>();
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (!other.CompareTag("Interactable"))
+        if (!other.CompareTag("Interactible"))
             return;
-        if (_interactionTarget != other.gameObject)
+        if (_interactionTarget != other.gameObject.GetComponent<Interactible>())
             return;
 
         _interactionTarget = null;
     }
+    
+    public Interactible InteractionTarget => _interactionTarget;
 
     private void FixedUpdate()
     {
