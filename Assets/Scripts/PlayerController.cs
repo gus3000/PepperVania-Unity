@@ -1,95 +1,166 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using Camera;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Serialization;
 
-namespace DefaultNamespace
+[RequireComponent(typeof(PlayerInput))]
+public class PlayerController : MonoBehaviour
 {
-    [RequireComponent(typeof(PlayerInput))]
-    public class PlayerController : MonoBehaviour
+    private const string DashAnimationName = "animation.pepper.dash";
+
+    [SerializeField, Tooltip("in m/s")] private float speed = 2;
+    [SerializeField] private float rotationSpeed = 10f;
+    [SerializeField] private float dashDurationMultiplier = 1f;
+    [SerializeField] private float dashSpeedBoost = 2f;
+    [SerializeField] private float dashCooldown = 1f;
+
+    private Animator _animator;
+    private PlayerInput _playerInput;
+    private IsoFollow _camera;
+
+    // the SerializeField below this are for debug only
+    [SerializeField] private Vector3 _velocity;
+    private float _angle;
+    [SerializeField] private float _baseDashDuration;
+    [SerializeField] private bool _isDashing;
+    [SerializeField] private float _timeSinceLastDash = 0;
+    [SerializeField] private GameObject _interactionTarget = null;
+
+
+    private static readonly int SpeedAnimHash = Animator.StringToHash("speed");
+    private static readonly int DashTriggerHash = Animator.StringToHash("dash");
+    private static readonly int DashSpeedHash = Animator.StringToHash("dashSpeed");
+
+    public bool HasMoved { get; private set; }
+
+    void Start()
     {
-        [SerializeField, Tooltip("in m/s")] private float speed = 2;
-        [SerializeField] private float rotationSpeed = 10f;
+        Debug.Log("Start");
+        _velocity = Vector3.forward;
+        _playerInput = GetComponent<PlayerInput>();
+        _velocity = Vector3.zero;
+        _camera = GameObject.FindWithTag("MainCamera").GetComponent<IsoFollow>();
+        _animator = GetComponentInChildren<Animator>();
 
-        [SerializeField] private Vector3 velocity;
-        public float angle;
-        public float velocityAngle;
-        private Animator _animator;
-        private PlayerInput _playerInput;
-        private IsoFollow camera;
+        var dashAnimation = _animator.runtimeAnimatorController.animationClips.First(clip => clip.name == DashAnimationName);
+        _baseDashDuration = dashAnimation.length;
+        HasMoved = false;
+    }
 
-        private static readonly int Speed = Animator.StringToHash("speed");
 
-        void Start()
+    void Update()
+    {
+        HandleInput();
+        HandleAnimations();
+        HandleMovement();
+    }
+
+    void HandleMovement()
+    {
+        var velocityModifier = 1f;
+        if (_isDashing)
+            velocityModifier *= dashSpeedBoost;
+
+        transform.Translate(_velocity * (speed * Time.deltaTime * velocityModifier), Space.World);
+    }
+
+    void HandleInput()
+    {
+        // Debug.Log(_playerInput.currentActionMap);
+    }
+
+    void HandleAnimations()
+    {
+        _animator.SetFloat(SpeedAnimHash, _velocity.magnitude);
+        _angle = Vector3.SignedAngle(transform.forward, _velocity, Vector3.up);
+        transform.Rotate(Vector3.up, _angle * rotationSpeed * Time.deltaTime);
+        _timeSinceLastDash += Time.deltaTime;
+        // angle = Vector3.Angle(Vector3.up, transform.forward);
+        // velocityAngle = Vector3.Angle(Vector3.up,velocity);
+        // transform.rotation = Quaternion.Euler();
+        // transform.forward = Vector3.Lerp(transform.forward, velocity, 1);
+    }
+
+    void OnJump()
+    {
+        Debug.Log("Jump");
+        Debug.Log(_playerInput.currentControlScheme);
+    }
+
+    void OnDash()
+    {
+        if (_isDashing || _timeSinceLastDash < dashCooldown)
+            return;
+        StartCoroutine(Dash());
+    }
+
+    IEnumerator Dash()
+    {
+        // Debug.Log($"start dash ({Time.time})");
+        _animator.SetTrigger(DashTriggerHash);
+        _animator.SetFloat(DashSpeedHash, 1 / dashDurationMultiplier);
+        _isDashing = true;
+        if (_velocity.magnitude == 0)
+            _velocity = transform.forward;
+        _velocity.Normalize();
+
+        yield return new WaitForSeconds(_baseDashDuration * dashDurationMultiplier);
+        _isDashing = false;
+        _timeSinceLastDash = 0;
+        // Debug.Log($"end dash ({Time.time})");
+    }
+
+    void OnMove(InputValue value)
+    {
+        HasMoved = true; //TODO rework this
+        Vector2 movement = value.Get<Vector2>();
+        //rotate velocity according to camera
+        var rawVelocity = new Vector3(movement.x, 0, movement.y);
+        var cameraAngle = (int)_camera.Direction;
+        var velocity = Quaternion.AngleAxis(cameraAngle, Vector3.up) * rawVelocity;
+
+        if (!_isDashing)
         {
-            Debug.Log("Start");
-            velocity = Vector3.forward;
-            _playerInput = GetComponent<PlayerInput>();
-            velocity = Vector3.zero;
-            camera = GameObject.FindWithTag("MainCamera").GetComponent<IsoFollow>();
-            _animator = GetComponentInChildren<Animator>();
+            _velocity = velocity;
+            return;
         }
 
 
-        void Update()
-        {
-            HandleInput();
-            HandleAnimations();
-            HandleMovement();
-        }
+        // Debug.Log($"velocity : {rawVelocity} => {velocity}");
+    }
 
-        void HandleMovement()
-        {
-            transform.Translate(velocity * (speed * Time.deltaTime), Space.World);
-        }
+    void OnControlsChanged()
+    {
+        if (_playerInput == null)
+            return; //not started yet
 
-        void HandleInput()
-        {
-            // Debug.Log(_playerInput.currentActionMap);
-        }
+        Debug.Log($"controls changed to {_playerInput.currentControlScheme}");
+    }
 
-        void HandleAnimations()
-        {
-            if (_animator == null)
-            {
-                throw new Exception("animator null");
-            }
+    private void OnTriggerEnter(Collider other)
+    {
+        Debug.Log($"Pepperping {other.name}");
+        if (!other.CompareTag("Interactable"))
+            return;
+        _interactionTarget = other.gameObject;
+    }
 
-            if (velocity == null)
-            {
-                throw new Exception("velocity is null");
-            }
+    private void OnTriggerExit(Collider other)
+    {
+        if (!other.CompareTag("Interactable"))
+            return;
+        if (_interactionTarget != other.gameObject)
+            return;
 
-            _animator.SetFloat(Speed, velocity.magnitude);
-            angle = Vector3.SignedAngle(transform.forward, velocity, Vector3.up);
-            transform.Rotate(Vector3.up, angle * rotationSpeed * Time.deltaTime);
-            // angle = Vector3.Angle(Vector3.up, transform.forward);
-            // velocityAngle = Vector3.Angle(Vector3.up,velocity);
-            // transform.rotation = Quaternion.Euler();
-            // transform.forward = Vector3.Lerp(transform.forward, velocity, 1);
-        }
+        _interactionTarget = null;
+    }
 
-        void OnJump()
-        {
-            Debug.Log("Jump");
-            Debug.Log(_playerInput.currentControlScheme);
-        }
-
-        void OnMove(InputValue value)
-        {
-            Vector2 movement = value.Get<Vector2>();
-            //rotate velocity according to camera
-            var rawVelocity = new Vector3(movement.x, 0, movement.y);
-            var cameraAngle = (int)camera.Direction;
-            velocity = Quaternion.AngleAxis(cameraAngle, Vector3.up) * rawVelocity;
-
-            // Debug.Log($"velocity : {rawVelocity} => {velocity}");
-        }
-
-        private void FixedUpdate()
-        {
-            // transform.Translate(velocity * (speed * Time.fixedDeltaTime),Space.World);
-        }
+    private void FixedUpdate()
+    {
+        // transform.Translate(velocity * (speed * Time.fixedDeltaTime),Space.World);
     }
 }
