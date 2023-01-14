@@ -147,6 +147,7 @@ public class PlayerController : MonoBehaviour
         if (_interactionTarget == null)
             return; //TODO maybe play animation ?
         _interactionTarget.Interact();
+        Won = true; //DEBUG, remove
     }
     
     private void OnTriggerEnter(Collider other)
@@ -166,6 +167,9 @@ public class PlayerController : MonoBehaviour
 
         _interactionTarget = null;
     }
+
+    public bool Won { get; protected set; }
+    
     
     public Interactible InteractionTarget => _interactionTarget;
 

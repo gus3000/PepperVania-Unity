@@ -17,5 +17,6 @@ public class Chest : Interactible
     {
         Debug.Log("Opening !");
         _animator.SetTrigger(OpenTriggerHash);
+        Used = true;
     }
 }

@@ -14,7 +14,8 @@ public class UiController : MonoBehaviour
     [SerializeField] private FadeInOut controlsTutorial;
     [SerializeField] private float showControlsTimer = 2;
     [SerializeField] private FadeInOut interactUi;
-
+    [SerializeField] private FadeInOut winDebug;
+    
     private PlayerController _player;
     private Coroutine _currentCoroutine;
     private GameController _gameController;
@@ -24,7 +25,8 @@ public class UiController : MonoBehaviour
         _player = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
         _gameController = GameObject.FindWithTag("GameController").GetComponent<GameController>();
         controlsTutorial.ShouldShow = () => (Time.time - _gameController.StartTime > showControlsTimer) && !_player.HasMoved;
-        interactUi.ShouldShow = () => _player.InteractionTarget != null;
+        interactUi.ShouldShow = () => _player.InteractionTarget != null && _player.InteractionTarget.CanInteract;
+        winDebug.ShouldShow = () => _player.Won;
     }
 
     private void Update()
