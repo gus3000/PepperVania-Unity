@@ -11,7 +11,7 @@ public abstract class Interactible : MonoBehaviour
     [SerializeField] protected string name;
     [SerializeField] protected string verb;
 
-    protected void Start()
+    protected virtual void Start()
     {
         Collider = GetComponent<Collider>();
         Debug.Log("Interactible start");

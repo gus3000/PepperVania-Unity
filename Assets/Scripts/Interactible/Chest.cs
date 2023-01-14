@@ -6,7 +6,7 @@ public class Chest : Interactible
     protected Animator _animator;
     private static readonly int OpenTriggerHash = Animator.StringToHash("Open");
 
-    private void Start()
+    protected override void Start()
     {
         base.Start();
         Debug.Log("Chest start");

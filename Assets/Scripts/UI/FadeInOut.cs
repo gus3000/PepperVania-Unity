@@ -18,7 +18,6 @@ namespace UI
         private void Start()
         {
             _showing = false;
-            ShouldShow = () => false;
             _canvasGroup = GetComponent<CanvasGroup>();
         }
 
