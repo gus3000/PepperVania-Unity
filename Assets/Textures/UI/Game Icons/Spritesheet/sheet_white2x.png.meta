@@ -20,12 +20,11 @@ TextureImporter:
     externalNormalMap: 0
     heightScale: 0.25
     normalMapFilter: 0
-    flipGreenChannel: 0
   isReadable: 0
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
-  ignoreMipmapLimit: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -64,7 +63,6 @@ TextureImporter:
   textureFormatSet: 0
   ignorePngGamma: 0
   applyGammaDecoding: 0
-  swizzle: 50462976
   cookieLightType: 0
   platformSettings:
   - serializedVersion: 3
@@ -314,10 +312,10 @@ TextureImporter:
       name: button1.png
       rect:
         serializedVersion: 2
-        x: 0
-        y: 1548
-        width: 100
-        height: 100
+        x: 18
+        y: 1566
+        width: 66
+        height: 66
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -335,10 +333,10 @@ TextureImporter:
       name: button2.png
       rect:
         serializedVersion: 2
-        x: 0
-        y: 1648
-        width: 100
-        height: 100
+        x: 20
+        y: 1662
+        width: 64
+        height: 72
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -356,10 +354,10 @@ TextureImporter:
       name: button3.png
       rect:
         serializedVersion: 2
-        x: 0
-        y: 1748
-        width: 100
-        height: 100
+        x: 18
+        y: 1766
+        width: 66
+        height: 64
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -377,10 +375,10 @@ TextureImporter:
       name: buttonA.png
       rect:
         serializedVersion: 2
-        x: 0
-        y: 1848
-        width: 100
-        height: 100
+        x: 18
+        y: 1866
+        width: 66
+        height: 66
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -398,10 +396,10 @@ TextureImporter:
       name: buttonB.png
       rect:
         serializedVersion: 2
-        x: 0
-        y: 1948
-        width: 100
-        height: 100
+        x: 20
+        y: 1962
+        width: 64
+        height: 72
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -587,10 +585,10 @@ TextureImporter:
       name: buttonX.png
       rect:
         serializedVersion: 2
-        x: 400
-        y: 348
-        width: 100
-        height: 100
+        x: 420
+        y: 366
+        width: 66
+        height: 66
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -608,10 +606,10 @@ TextureImporter:
       name: buttonY.png
       rect:
         serializedVersion: 2
-        x: 400
-        y: 448
-        width: 100
-        height: 100
+        x: 420
+        y: 466
+        width: 64
+        height: 68
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -2350,7 +2348,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 8480b015261651243ae65228abcd232b
     internalID: 0
     vertices: []
     indices: 
@@ -2463,8 +2461,9 @@ TextureImporter:
       return.png: 9040033031345551915
       upLeft.png: -9152075397669011260
       joystick.png: 7023243169575057824
-  mipmapLimitGroupName: 
+  spritePackingTag: 
   pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 

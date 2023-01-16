@@ -29,7 +29,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private bool _isDashing;
     [SerializeField] private float _timeSinceLastDash = 0;
     [SerializeField] private Interactible _interactionTarget = null;
-
+    private float _deadZoneSize = 0.05f;
+    private Vector2 _inputMovement;
+    
 
     private static readonly int SpeedAnimHash = Animator.StringToHash("speed");
     private static readonly int DashTriggerHash = Animator.StringToHash("dash");
@@ -45,6 +47,7 @@ public class PlayerController : MonoBehaviour
         _velocity = Vector3.zero;
         _camera = GameObject.FindWithTag("MainCamera").GetComponent<IsoFollow>();
         _animator = GetComponentInChildren<Animator>();
+        _inputMovement = Vector2.zero;
 
         var dashAnimation = _animator.runtimeAnimatorController.animationClips.First(clip => clip.name == DashAnimationName);
         _baseDashDuration = dashAnimation.length;
@@ -61,6 +64,24 @@ public class PlayerController : MonoBehaviour
 
     void HandleMovement()
     {
+        //rotate velocity according to camera
+        var rawVelocity = new Vector3(_inputMovement.x, 0, _inputMovement.y);
+        var cameraAngle = (int)_camera.Direction;
+        var velocity = Quaternion.AngleAxis(cameraAngle, Vector3.up) * rawVelocity;
+
+        // Debug.Log($"velocity : {velocity}");
+        if (!_isDashing && velocity.magnitude <= _deadZoneSize)
+        {
+            _velocity = Vector3.zero;
+        }
+        else if (!_isDashing)
+        {
+            _velocity = velocity;
+        }
+
+
+        // Debug.Log($"velocity : {rawVelocity} => {velocity}");
+        
         var velocityModifier = 1f;
         if (_isDashing)
             velocityModifier *= dashSpeedBoost;
@@ -116,21 +137,8 @@ public class PlayerController : MonoBehaviour
 
     void OnMove(InputValue value)
     {
-        HasMoved = true; //TODO rework this
-        Vector2 movement = value.Get<Vector2>();
-        //rotate velocity according to camera
-        var rawVelocity = new Vector3(movement.x, 0, movement.y);
-        var cameraAngle = (int)_camera.Direction;
-        var velocity = Quaternion.AngleAxis(cameraAngle, Vector3.up) * rawVelocity;
-
-        if (!_isDashing)
-        {
-            _velocity = velocity;
-            return;
-        }
-
-
-        // Debug.Log($"velocity : {rawVelocity} => {velocity}");
+        HasMoved = true;
+        _inputMovement = value.Get<Vector2>();
     }
 
     void OnControlsChanged()
@@ -149,7 +157,7 @@ public class PlayerController : MonoBehaviour
         _interactionTarget.Interact();
         Won = true; //DEBUG, remove
     }
-    
+
     private void OnTriggerEnter(Collider other)
     {
         // Debug.Log($"Pepperping {other.name}");
@@ -169,8 +177,8 @@ public class PlayerController : MonoBehaviour
     }
 
     public bool Won { get; protected set; }
-    
-    
+
+
     public Interactible InteractionTarget => _interactionTarget;
 
     private void FixedUpdate()

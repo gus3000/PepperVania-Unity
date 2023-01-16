@@ -15,6 +15,7 @@ public class UiController : MonoBehaviour
     [SerializeField] private float showControlsTimer = 2;
     [SerializeField] private FadeInOut interactUi;
     [SerializeField] private FadeInOut winDebug;
+    [SerializeField] private CanvasGroup androidControls;
     
     private PlayerController _player;
     private Coroutine _currentCoroutine;
@@ -27,6 +28,8 @@ public class UiController : MonoBehaviour
         controlsTutorial.ShouldShow = () => (Time.time - _gameController.StartTime > showControlsTimer) && !_player.HasMoved;
         interactUi.ShouldShow = () => _player.InteractionTarget != null && _player.InteractionTarget.CanInteract;
         winDebug.ShouldShow = () => _player.Won;
+        
+        ConfigureUi();
     }
 
     private void Update()
@@ -35,6 +38,44 @@ public class UiController : MonoBehaviour
             // ShowControls();
         // else if(ShouldHideControlsPanel && _controlsShowing)
             // HideControls();
+    }
+    
+    
+    private void ConfigureUi()
+    {
+        List<string> toEnable = new ();
+        List<string> toDisable = new ();
+        if (Application.platform == RuntimePlatform.Android)
+        {
+            toEnable.Add("Android");
+            toDisable.Add("PC");
+            androidControls.alpha = 1;
+        }
+        else
+        {
+            toEnable.Add("PC");
+            toDisable.Add("Android");
+            androidControls.alpha = 0;
+        }
+
+        // foreach (var tagToEnable in toEnable)
+        // {
+        //     foreach (var go in GameObject.FindGameObjectsWithTag(tagToEnable))
+        //     {
+        //         var canvasGroup = go.GetComponent<CanvasGroup>();
+        //         if (canvasGroup == null)
+        //             continue;
+        //         canvasGroup.alpha = 1;
+        //     }
+        // }
+        
+        foreach (var tagToDisable in toDisable)
+        {
+            foreach (var go in GameObject.FindGameObjectsWithTag(tagToDisable))
+            {
+                go.SetActive(false);
+            }
+        }
     }
     
 }
