@@ -6,6 +6,9 @@ TagManager:
   tags:
   - UICanvas
   - Interactible
+  - Interactable
+  - Android
+  - PC
   layers:
   - Default
   - TransparentFX
@@ -14,8 +17,8 @@ TagManager:
   - Water
   - UI
   - Interaction
-  - 
-  - 
+  - UI-mobile
+  - Ui-nonmobile
   - 
   - 
   - 
