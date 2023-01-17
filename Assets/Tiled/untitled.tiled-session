@@ -1,0 +1,139 @@
+{
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "Stone.tsx",
+    "expandedProjectPaths": [
+        ".",
+        "Rules"
+    ],
+    "file.lastUsedOpenFilter": "All Files (*)",
+    "fileStates": {
+        ":/automap-tiles.tsx": {
+            "dynamicWrapping": false,
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "C:/Users/gus3000/Downloads/Assets/Kenney/Kenney Game Assets (version 41)/2D assets/Roguelike Base Pack/Map/sample_indoor.tmx": {
+            "scale": 5.5,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 293.9090909090909,
+                "y": 244.90909090909093
+            }
+        },
+        "C:/Users/gus3000/Downloads/Assets/Kenney/Kenney Game Assets (version 41)/2D assets/Roguelike Base Pack/Map/sample_indoor.tmx#roguelikeSheet_transparent": {
+            "scaleInDock": 1
+        },
+        "C:/Users/gus3000/Downloads/Assets/Kenney/Kenney Game Assets (version 41)/2D assets/Roguelike Base Pack/Map/sample_map.tmx": {
+            "scale": 2,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 586.25,
+                "y": 540.5
+            }
+        },
+        "C:/Users/gus3000/Downloads/Assets/Kenney/Kenney Game Assets (version 41)/2D assets/Roguelike Base Pack/Map/sample_map.tmx#Roguelike": {
+            "scaleInDock": 1
+        },
+        "Rules/autotile rules.tmx": {
+            "scale": 11,
+            "selectedLayer": 2,
+            "viewCenter": {
+                "x": 89.59090909090908,
+                "y": 45.72727272727273
+            }
+        },
+        "Rules/autotile_rules.tmx": {
+            "scale": 4,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 130.625,
+                "y": 61.25
+            }
+        },
+        "Rules/autotile_rules_stone.tmx": {
+            "scale": 3,
+            "selectedLayer": 2,
+            "viewCenter": {
+                "x": 153.16666666666663,
+                "y": 201
+            }
+        },
+        "Stone.tsx": {
+            "scaleInDock": 2,
+            "scaleInEditor": 8
+        },
+        "main.tmx": {
+            "scale": 8,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 142.3125,
+                "y": 230.875
+            }
+        },
+        "prototype.tmx": {
+            "scale": 3,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 427.66666666666663,
+                "y": 802.3333333333333
+            }
+        },
+        "prototype.tsx": {
+            "dynamicWrapping": true,
+            "scaleInDock": 1,
+            "scaleInEditor": 11
+        },
+        "prototype_v2.tsx": {
+            "dynamicWrapping": false,
+            "scaleInDock": 3,
+            "scaleInEditor": 11
+        },
+        "protoype.tsx": {
+            "dynamicWrapping": false,
+            "scaleInDock": 2,
+            "scaleInEditor": 11
+        }
+    },
+    "last.externalTilesetPath": "C:/Users/gus3000/UnityProjects/PepperVania/Assets/Tiled",
+    "last.imagePath": "C:/Users/gus3000/UnityProjects/PepperVania/Assets/Tiled",
+    "map.fixedSize": true,
+    "map.height": 50,
+    "map.lastUsedFormat": "tmx",
+    "map.orientation": 1,
+    "map.tileHeight": 32,
+    "map.tileWidth": 32,
+    "map.width": 100,
+    "openFiles": [
+        "main.tmx",
+        "prototype_v2.tsx",
+        "Rules/autotile_rules_stone.tmx",
+        "Stone.tsx"
+    ],
+    "project": "untitled.tiled-project",
+    "property.type": "bool",
+    "recentFiles": [
+        "main.tmx",
+        "prototype_v2.tsx",
+        "Rules/autotile_rules_stone.tmx",
+        "Stone.tsx",
+        "Rules/autotile_rules.tmx",
+        "C:/Users/gus3000/Downloads/Assets/Kenney/Kenney Game Assets (version 41)/2D assets/Roguelike Base Pack/Map/sample_map.tmx",
+        "C:/Users/gus3000/Downloads/Assets/Kenney/Kenney Game Assets (version 41)/2D assets/Roguelike Base Pack/Map/sample_indoor.tmx",
+        "Rules/autotile rules.tmx",
+        "prototype.tsx",
+        ":/automap-tiles.tsx",
+        "protoype.tsx",
+        "prototype.tmx"
+    ],
+    "tileset.lastUsedFilter": "Tiled tileset files (*.tsx *.xml)",
+    "tileset.lastUsedFormat": "tsx",
+    "tileset.spacing": 0,
+    "tileset.tileSize": {
+        "height": 16,
+        "width": 16
+    },
+    "tileset.type": 0
+}
