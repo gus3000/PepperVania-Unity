@@ -54,11 +54,11 @@
             }
         },
         "Rules/autotile_rules_stone.tmx": {
-            "scale": 3,
-            "selectedLayer": 2,
+            "scale": 4,
+            "selectedLayer": 0,
             "viewCenter": {
-                "x": 153.16666666666663,
-                "y": 201
+                "x": 141.375,
+                "y": 277.5
             }
         },
         "Stone.tsx": {
@@ -69,19 +69,19 @@
             "expandedObjectLayers": [
                 2
             ],
-            "scale": 11,
+            "scale": 16,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 370.3181818181818,
-                "y": 390.54545454545456
+                "x": 339.28125,
+                "y": 378
             }
         },
         "main.tmx": {
             "scale": 3,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 262.49999999999994,
-                "y": 193.66666666666663
+                "x": 300.49999999999994,
+                "y": 193.33333333333334
             }
         },
         "prototype.tmx": {
@@ -110,6 +110,7 @@
     },
     "last.externalTilesetPath": "C:/Users/gus3000/UnityProjects/PepperVania/Assets/Tiled",
     "last.imagePath": "C:/Users/gus3000/UnityProjects/PepperVania/Assets/Tiled",
+    "last.objectTemplatePath": "C:/Users/gus3000/UnityProjects/PepperVania/Assets/Tiled/Templates",
     "map.fixedSize": true,
     "map.height": 50,
     "map.lastUsedFormat": "tmx",
@@ -126,11 +127,11 @@
     "project": "untitled.tiled-project",
     "property.type": "bool",
     "recentFiles": [
+        "main.tmx",
         "level.tmx",
         "prototype_v2.tsx",
         "Stone.tsx",
         "Rules/autotile_rules_stone.tmx",
-        "main.tmx",
         "Rules/autotile_rules.tmx",
         "C:/Users/gus3000/Downloads/Assets/Kenney/Kenney Game Assets (version 41)/2D assets/Roguelike Base Pack/Map/sample_map.tmx",
         "C:/Users/gus3000/Downloads/Assets/Kenney/Kenney Game Assets (version 41)/2D assets/Roguelike Base Pack/Map/sample_indoor.tmx",

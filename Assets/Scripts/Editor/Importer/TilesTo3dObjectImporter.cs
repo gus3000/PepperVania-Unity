@@ -77,18 +77,30 @@ namespace Editor.Importer
                 }
                 else if (objectLayer != null)
                 {
-                    Debug.Log($"Attempting to summon object {superObject} of type {superObject.m_Type}");
-                    var script = _modelContainer.GetScript(superObject.m_Type);
-                    Debug.Log($"attaching script {superObject.m_Type} : {script.GetClass()}");
+                    // Debug.Log($"Attempting to summon object {superObject} of type {superObject.m_Type}");
+                    var objectPrefab = _modelContainer.GetObject(superObject.m_Type);
+                    // Debug.Log($"attaching script {superObject.m_Type} : {script.GetClass()}");
                     Debug.Log($"putting object at {superObject.m_X},{superObject.m_Y}");
-                    var scriptGameObject = new GameObject(superObject.m_Type, script.GetClass())
+                    if (objectPrefab == null)
                     {
-                        transform =
-                        {
-                            parent = tiledObjectContainer.transform,
-                            position = GetTilePosition(new Vector2(superObject.m_X,superObject.m_Y), map)
-                        }
-                    };
+                        Debug.LogWarning($"Attempt to summon object of type {superObject.m_Type} failed because there's no such prefab");
+                        continue;
+                    }
+                    // var scriptGameObject = new GameObject(superObject.m_Type, script.GetClass())
+                    // {
+                    // transform =
+                    // {
+                    // parent = tiledObjectContainer.transform,
+                    // position = GetObjectPosition(new Vector2(superObject.m_X,superObject.m_Y), map)
+                    // }
+                    // };
+
+                    Object.Instantiate(
+                        objectPrefab,
+                        GetObjectPosition(superObject, map),
+                        Quaternion.Euler(0, -superObject.m_Rotation, 0),
+                        tiledObjectContainer.transform
+                    );
                 }
 
                 // Debug.Log($"tile {tile} => {tile.m_TileId}");
@@ -114,11 +126,12 @@ namespace Editor.Importer
             // Debug.Log($"map tile height : {map.m_TileHeight}");
             // foreach (var tileId in tileMap.Values.Distinct())
             // {
-                // Debug.Log($"Unique tile id : {tileId}");
+            // Debug.Log($"Unique tile id : {tileId}");
             // }
 
             DestroyPrefabsInScene();
         }
+
 
         private void PreparePrefabs(string prefabPrefix, IEnumerable<SuperObject> tiles)
         {
@@ -215,7 +228,7 @@ namespace Editor.Importer
             }
 
             var go = Object.Instantiate(_generatedPrefabs[tile.m_TileId]);
-            
+
             go.transform.position = GetTilePosition(coords, map);
             go.name = $"{go.transform.position} {tileName} {tile.m_Id} {tile.m_TileId}";
             var plane = go.transform.GetChild(0).GetChild(0);
@@ -227,19 +240,27 @@ namespace Editor.Importer
             return go;
         }
 
-
-        private Vector3 GetObjectPosition(Vector2 coords, SuperMap map)
+        private Vector3 GetObjectPosition(SuperObject superObject, SuperMap map)
         {
-            var x = coords.x / map.m_TileWidth;
-            var z = map.m_Height - (coords.y / map.m_TileHeight);
+            var xDelta = superObject.m_Width / 2;
+            var yDelta = superObject.m_Height / 2;
             
+            // var x = (superObject.m_X + xDelta) / map.m_TileWidth;
+            // var z = map.m_Height - ((superObject.m_Y - yDelta) / map.m_TileHeight);
+            var x = (superObject.m_X + Mathf.Cos(superObject.m_Rotation) * xDelta) / map.m_TileWidth;
+            var z = map.m_Height - (superObject.m_Y + Mathf.Sin(superObject.m_Rotation) * yDelta) / map.m_TileHeight;
+
+
+            
+
             return new Vector3(x, 0, z);
         }
+
         private Vector3 GetTilePosition(Vector2 coords, SuperMap map)
         {
             var x = coords.x / map.m_TileWidth;
             var z = map.m_Height - 1 - (coords.y / map.m_TileHeight);
-            
+
             return new Vector3(x, 0, z);
         }
 

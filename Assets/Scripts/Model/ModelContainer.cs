@@ -15,15 +15,15 @@ namespace Model
         public GameObject TileBasePrefab => tileBasePrefab;
 
 #if UNITY_EDITOR
-        [SerializeField] private SerializableDictionaryBase<string, MonoScript> scripts;
-        public MonoScript GetScript(string scriptName)
+        [SerializeField] private SerializableDictionaryBase<string, GameObject> objects;
+        public GameObject GetObject(string scriptName)
         {
-            if (!scripts.ContainsKey(scriptName))
+            if (!objects.ContainsKey(scriptName))
             {
-                Debug.LogWarning($"no known script with key {scriptName}");
+                Debug.LogWarning($"no prefab with key {scriptName}");
                 return null;
             }
-            return scripts[scriptName];
+            return objects[scriptName];
         }
 #endif
     }

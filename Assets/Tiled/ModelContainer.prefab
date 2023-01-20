@@ -44,7 +44,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32841b0bd5344db2abb14b9dcc485f78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scripts:
+  tileBasePrefab: {fileID: 5307129788580597355, guid: 6114077eee8f33e439edea5b8ed19c51, type: 3}
+  objects:
     reorderableList:
       canAdd: 1
       canRemove: 1
@@ -69,8 +70,10 @@ MonoBehaviour:
     isExpanded: 1
     _keyValues:
     - SpawnPoint
+    - Chest
     _keys:
     - SpawnPoint
+    - Chest
     _values:
-    - {fileID: 11500000, guid: fe193c0513ca4a3aa79fb92a9e885fe7, type: 3}
-  tileBasePrefab: {fileID: 5307129788580597355, guid: 6114077eee8f33e439edea5b8ed19c51, type: 3}
+    - {fileID: 8984180617711188031, guid: 2b4ebb38fd1032247a5d39370411921d, type: 3}
+    - {fileID: 6671886250286794392, guid: 31ea4d66d276a454abac4a57c448908d, type: 3}
