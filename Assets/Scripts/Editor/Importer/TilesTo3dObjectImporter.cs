@@ -33,6 +33,10 @@ namespace Editor.Importer
 
         public override void TmxAssetImported(TmxAssetImportedArgs args)
         {
+            _modelContainer = GetModelContainer();
+            if (_modelContainer == null)
+                throw new Exception("Unable to find model container");
+
             var map = args.ImportedSuperMap;
             var importer = args.AssetImporter;
             Debug.Log("----------------------- IMPORT -----------------------");
@@ -40,69 +44,61 @@ namespace Editor.Importer
             tileWidth = map.m_TileWidth;
             tileHeight = map.m_TileHeight;
 
+            var grid = map.GetComponentInChildren<Grid>();
+            var gridTransform = grid.transform;
+            var terrainGameObject = new GameObject("Terrain")
+            {
+                transform =
+                {
+                    parent = gridTransform
+                }
+            };
+
+            var tileLayerTransform = terrainGameObject.transform;
+            var tiledObjectContainer = new GameObject("Objects")
+            {
+                transform =
+                {
+                    parent = gridTransform
+                }
+            };
+
             var tileMap = new Dictionary<Vector2, SuperObject>();
 
             var tiles = map.GetComponentsInChildren<SuperObject>();
-            foreach (var tile in tiles)
+            foreach (var superObject in tiles)
             {
-                if (tile.GetComponentInParent<SuperTileLayer>().m_TiledName != LayerToKeep)
-                    continue;
+                var tileLayer = superObject.GetComponentInParent<SuperTileLayer>();
+                var objectLayer = superObject.GetComponentInParent<SuperObjectLayer>();
+
+                if (tileLayer != null && tileLayer.m_TiledName == LayerToKeep)
+                {
+                    tileMap.Add(new Vector2(superObject.m_X, superObject.m_Y), superObject);
+                }
+                else if (objectLayer != null)
+                {
+                    Debug.Log($"Attempting to summon object {superObject} of type {superObject.m_Type}");
+                    var script = _modelContainer.GetScript(superObject.m_Type);
+                    Debug.Log($"attaching script {superObject.m_Type} : {script.GetClass()}");
+                    Debug.Log($"putting object at {superObject.m_X},{superObject.m_Y}");
+                    var scriptGameObject = new GameObject(superObject.m_Type, script.GetClass())
+                    {
+                        transform =
+                        {
+                            parent = tiledObjectContainer.transform,
+                            position = GetTilePosition(new Vector2(superObject.m_X,superObject.m_Y), map)
+                        }
+                    };
+                }
+
                 // Debug.Log($"tile {tile} => {tile.m_TileId}");
                 // Debug.Log($"type : {tile.m_Type}");
-                tileMap.Add(new Vector2(tile.m_X, tile.m_Y), tile);
             }
 
 
             var distinctTiles = tileMap.Values.Distinct(new TileComparerByTileId()).ToList();
             // Debug.Log($"total tiles = {tileMap.Count}, distinct = {distinctTiles.Count()}");
             PreparePrefabs(PrefabPrefix, distinctTiles);
-            // Debug.Log($"prefabs (count {_generatedPrefabs.Count}): ");
-
-            // bool debugStop = false;
-            // if (_generatedMeshes == null)
-            // {
-            //     Debug.Log("generated meshes null :(");
-            //     debugStop = true;
-            // }
-            // if(_generatedPrefabs == null)
-            // {
-            //     Debug.Log("generated prefabs null :(");
-            //     debugStop = true;
-            // }
-            //
-            // foreach (var (tileId, prefab) in _generatedPrefabs)
-            // {
-            //     // Debug.Log($"prefab {tileId} =>");
-            //     if(prefab == null)
-            //         Debug.Log($"{tileId} prefab is null");
-            //     else
-            //         Debug.Log($"{tileId} is NOT NULL <-----------------");
-            // }
-            //
-            // debugStop = true;
-            //
-            // if (debugStop)
-            // {
-            //     Debug.Log("an error was encoutered, stopping now");
-            //     return;
-            // }
-            
-            // foreach (var (tileId, mesh) in _generatedMeshes)
-            // {
-            //     Debug.Log($"Mesh {tileId} => {mesh}");
-            // }
-            //
-            // foreach (var (tileId, prefab) in _generatedPrefabs)
-            // {
-            //     Debug.Log($"Prefab {tileId} => {prefab.name}");
-            // }
-
-
-            var objectLayer = new GameObject("Terrain");
-            var grid = map.GetComponentInChildren<Grid>();
-            objectLayer.transform.parent = grid.transform;
-
-            var objectLayerTransform = objectLayer.transform;
 
             foreach (var (pos2d, tile) in tileMap)
             {
@@ -110,25 +106,22 @@ namespace Editor.Importer
                 if (go == null)
                     continue;
 
-                go.transform.parent = objectLayerTransform;
+                go.transform.parent = tileLayerTransform;
             }
 
-            // Clean2DTiles(grid);
+            Clean2DTiles(grid);
 
             // Debug.Log($"map tile height : {map.m_TileHeight}");
-            foreach (var tileId in tileMap.Values.Distinct())
-            {
+            // foreach (var tileId in tileMap.Values.Distinct())
+            // {
                 // Debug.Log($"Unique tile id : {tileId}");
-            }
+            // }
 
-            // DestroyPrefabsInScene();
+            DestroyPrefabsInScene();
         }
 
         private void PreparePrefabs(string prefabPrefix, IEnumerable<SuperObject> tiles)
         {
-            _modelContainer = GetModelContainer();
-            if (_modelContainer == null)
-                throw new Exception("Unable to find model container");
             _generatedPrefabs = new();
             _generatedMeshes = new();
 
@@ -141,32 +134,14 @@ namespace Editor.Importer
             var texture = meshRenderer.sharedMaterial.mainTexture;
             var singleTileOffset = new DoublePoint((float)tileWidth / texture.width, (float)tileHeight / texture.height);
             var tilesPerLine = texture.width / tileWidth;
-            // Debug.Log($"tile dimensions : {tileWidth}x{tileHeight}");
-            // Debug.Log($"single tile offset : {singleTileOffset.X}x{singleTileOffset.Y}");
 
             foreach (var tile in tiles)
             {
-                // Debug.Log($"Adding tile {tile}");
-                // var prefab = _modelContainer.GetPrefab(prefabPrefix, tile.m_Type);
-
-                GameObject go = GameObject.Instantiate(tileBasePrefab, prefabTransformParent, true);
-
+                GameObject go = Object.Instantiate(tileBasePrefab, prefabTransformParent, true);
 
                 var plane = go.transform.GetChild(0).GetChild(0);
-                // Debug.Log($"plane name = {plane}");
 
                 var meshFilter = plane.GetComponent<MeshFilter>();
-                // var mesh = Object.Instantiate(meshFilter.sharedMesh);
-                // var originalMesh = meshFilter.mesh;
-                // var mesh = new Mesh
-                // {
-                // name = "clone",
-                // vertices = originalMesh.vertices,
-                // triangles = originalMesh.triangles,
-                // normals = originalMesh.normals,
-                // uv = originalMesh.uv
-                // };
-                // meshFilter.sharedMesh = mesh; //FIXME does not actually replace the mesh
                 var meshCopy = Object.Instantiate(meshFilter.sharedMesh);
                 var tileId = tile.m_TileId;
                 var offset = new Vector2(
@@ -194,11 +169,12 @@ namespace Editor.Importer
                     Debug.LogWarning($"Unable to create prefab {tileId}");
                     continue;
                 }
+
                 // Debug.Log($"Created {tileId} prefab at {AssetDatabase.GetAssetPath(go)}, should be at {PrefabPathFromTileId(tileId)}");
                 _generatedMeshes[tile.m_TileId] = meshCopy;
                 _generatedPrefabs[tile.m_TileId] = go;
-
             }
+
             AssetDatabase.SaveAssets();
         }
 
@@ -239,11 +215,8 @@ namespace Editor.Importer
             }
 
             var go = Object.Instantiate(_generatedPrefabs[tile.m_TileId]);
-
-            var x = coords.x / map.m_TileWidth;
-            var z = map.m_Height - 1 - (coords.y / map.m_TileHeight);
-
-            go.transform.position = new Vector3(x, 0, z);
+            
+            go.transform.position = GetTilePosition(coords, map);
             go.name = $"{go.transform.position} {tileName} {tile.m_Id} {tile.m_TileId}";
             var plane = go.transform.GetChild(0).GetChild(0);
             var meshFilter = plane.GetComponent<MeshFilter>();
@@ -254,6 +227,22 @@ namespace Editor.Importer
             return go;
         }
 
+
+        private Vector3 GetObjectPosition(Vector2 coords, SuperMap map)
+        {
+            var x = coords.x / map.m_TileWidth;
+            var z = map.m_Height - (coords.y / map.m_TileHeight);
+            
+            return new Vector3(x, 0, z);
+        }
+        private Vector3 GetTilePosition(Vector2 coords, SuperMap map)
+        {
+            var x = coords.x / map.m_TileWidth;
+            var z = map.m_Height - 1 - (coords.y / map.m_TileHeight);
+            
+            return new Vector3(x, 0, z);
+        }
+
         private static string BasicPathFromTileId(uint tileId) => $"Assets/Prefab/Generated/tile{tileId}";
         private static string MeshPathFromTileId(uint tileId) => $"{BasicPathFromTileId(tileId)}.mesh";
         private static string AssetPathFromTileId(uint tileId) => $"{BasicPathFromTileId(tileId)}.asset";
@@ -261,8 +250,14 @@ namespace Editor.Importer
 
         private void Clean2DTiles(Grid grid)
         {
-            var layers = grid.GetComponentsInChildren<SuperTileLayer>();
-            foreach (var layer in layers)
+            var tileLayers = grid.GetComponentsInChildren<SuperTileLayer>();
+            foreach (var layer in tileLayers)
+            {
+                Object.DestroyImmediate(layer.gameObject);
+            }
+
+            var objectLayers = grid.GetComponentsInChildren<SuperObjectLayer>();
+            foreach (var layer in objectLayers)
             {
                 Object.DestroyImmediate(layer.gameObject);
             }

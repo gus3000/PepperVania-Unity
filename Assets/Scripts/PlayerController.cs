@@ -41,7 +41,6 @@ public class PlayerController : MonoBehaviour
 
     void Start()
     {
-        Debug.Log("Start");
         _velocity = Vector3.forward;
         _playerInput = GetComponent<PlayerInput>();
         _velocity = Vector3.zero;

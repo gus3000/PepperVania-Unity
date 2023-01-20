@@ -1,25 +1,30 @@
-﻿    using System.Collections.Generic;
-    using RotaryHeart.Lib.SerializableDictionary;
-    using UnityEngine;
-    using UnityEngine.Serialization;
+﻿using System.Collections.Generic;
+using RotaryHeart.Lib.SerializableDictionary;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
+using UnityEngine;
+using UnityEngine.Serialization;
 
-    namespace Model
+namespace Model
+{
+    public class ModelContainer : MonoBehaviour
     {
-        public class ModelContainer : MonoBehaviour
+        [SerializeField] private GameObject tileBasePrefab;
+
+        public GameObject TileBasePrefab => tileBasePrefab;
+
+#if UNITY_EDITOR
+        [SerializeField] private SerializableDictionaryBase<string, MonoScript> scripts;
+        public MonoScript GetScript(string scriptName)
         {
-            // [SerializeField] private Dictionary<string, GameObject> _prefabs;
-            // [SerializeField] private GameObject[] prefabs;
-            // [SerializeField] private UnityFriendlyDictionary<string, GameObject> prefabsDictionary;
-            [SerializeField] private SerializableDictionaryBase<string, GameObject> prefabs;
-            [SerializeField] private GameObject tileBasePrefab;
-
-            public GameObject TileBasePrefab => tileBasePrefab;
-
-            public GameObject GetPrefab(string prefix, string tileName)
+            if (!scripts.ContainsKey(scriptName))
             {
-                prefabs.TryGetValue(tileName, out var go);
-                return go == null ? prefabs["unknown"] : go;
-                
+                Debug.LogWarning($"no known script with key {scriptName}");
+                return null;
             }
+            return scripts[scriptName];
         }
+#endif
     }
+}
