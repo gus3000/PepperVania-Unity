@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class GameController : MonoBehaviour
 {
@@ -19,5 +20,10 @@ public class GameController : MonoBehaviour
     private void Update()
     {
 
+    }
+
+    public void ChangeControls(PlayerInput playerInput)
+    {
+        
     }
 }

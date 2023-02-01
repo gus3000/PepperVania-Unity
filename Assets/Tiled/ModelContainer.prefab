@@ -71,9 +71,12 @@ MonoBehaviour:
     _keyValues:
     - SpawnPoint
     - Chest
+    - CatTree
     _keys:
     - SpawnPoint
     - Chest
+    - CatTree
     _values:
     - {fileID: 8984180617711188031, guid: 2b4ebb38fd1032247a5d39370411921d, type: 3}
     - {fileID: 6671886250286794392, guid: 31ea4d66d276a454abac4a57c448908d, type: 3}
+    - {fileID: 7858960209383461756, guid: 9c3c3a937ce1e2c43aefe532829fed85, type: 3}

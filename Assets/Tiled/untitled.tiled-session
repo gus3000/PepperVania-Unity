@@ -3,9 +3,10 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "main.tmx",
+    "activeFile": "level.tmx",
     "expandedProjectPaths": [
         ".",
+        "Templates",
         "Rules"
     ],
     "file.lastUsedOpenFilter": "All Files (*)",
@@ -54,26 +55,26 @@
             }
         },
         "Rules/autotile_rules_stone.tmx": {
-            "scale": 4,
+            "scale": 23,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 141.375,
-                "y": 277.5
+                "x": 206.2391304347826,
+                "y": 327.7391304347826
             }
         },
         "Stone.tsx": {
             "scaleInDock": 2,
-            "scaleInEditor": 4
+            "scaleInEditor": 8
         },
         "level.tmx": {
             "expandedObjectLayers": [
                 2
             ],
-            "scale": 16,
-            "selectedLayer": 1,
+            "scale": 5.5,
+            "selectedLayer": 2,
             "viewCenter": {
-                "x": 339.28125,
-                "y": 378
+                "x": 325.9090909090909,
+                "y": 402.3636363636364
             }
         },
         "main.tmx": {
@@ -119,19 +120,18 @@
     "map.tileWidth": 16,
     "map.width": 50,
     "openFiles": [
-        "main.tmx",
-        "prototype_v2.tsx",
         "Rules/autotile_rules_stone.tmx",
-        "Stone.tsx"
+        "Stone.tsx",
+        "level.tmx"
     ],
     "project": "untitled.tiled-project",
-    "property.type": "bool",
+    "property.type": "int",
     "recentFiles": [
-        "main.tmx",
-        "level.tmx",
-        "prototype_v2.tsx",
-        "Stone.tsx",
         "Rules/autotile_rules_stone.tmx",
+        "Stone.tsx",
+        "level.tmx",
+        "main.tmx",
+        "prototype_v2.tsx",
         "Rules/autotile_rules.tmx",
         "C:/Users/gus3000/Downloads/Assets/Kenney/Kenney Game Assets (version 41)/2D assets/Roguelike Base Pack/Map/sample_map.tmx",
         "C:/Users/gus3000/Downloads/Assets/Kenney/Kenney Game Assets (version 41)/2D assets/Roguelike Base Pack/Map/sample_indoor.tmx",

@@ -86,21 +86,22 @@ namespace Editor.Importer
                         Debug.LogWarning($"Attempt to summon object of type {superObject.m_Type} failed because there's no such prefab");
                         continue;
                     }
-                    // var scriptGameObject = new GameObject(superObject.m_Type, script.GetClass())
-                    // {
-                    // transform =
-                    // {
-                    // parent = tiledObjectContainer.transform,
-                    // position = GetObjectPosition(new Vector2(superObject.m_X,superObject.m_Y), map)
-                    // }
-                    // };
 
-                    Object.Instantiate(
+                    var properties = superObject.GetComponent<SuperCustomProperties>();
+                    
+                    // Debug.Log($"{superObject.name} properties : {String.Join(", ",properties.m_Properties)}");
+
+                    var go = Object.Instantiate(
                         objectPrefab,
                         GetObjectPosition(superObject, map),
                         Quaternion.Euler(0, -superObject.m_Rotation, 0),
                         tiledObjectContainer.transform
                     );
+                    
+                    foreach (var prop in properties.m_Properties)
+                    {
+                        go.BroadcastProperty(prop);
+                    }
                 }
 
                 // Debug.Log($"tile {tile} => {tile.m_TileId}");
@@ -122,7 +123,7 @@ namespace Editor.Importer
             }
 
             Clean2DTiles(grid);
-
+            
             // Debug.Log($"map tile height : {map.m_TileHeight}");
             // foreach (var tileId in tileMap.Values.Distinct())
             // {
@@ -244,14 +245,12 @@ namespace Editor.Importer
         {
             var xDelta = superObject.m_Width / 2;
             var yDelta = superObject.m_Height / 2;
-            
+
             // var x = (superObject.m_X + xDelta) / map.m_TileWidth;
             // var z = map.m_Height - ((superObject.m_Y - yDelta) / map.m_TileHeight);
             var x = (superObject.m_X + Mathf.Cos(superObject.m_Rotation) * xDelta) / map.m_TileWidth;
             var z = map.m_Height - (superObject.m_Y + Mathf.Sin(superObject.m_Rotation) * yDelta) / map.m_TileHeight;
 
-
-            
 
             return new Vector3(x, 0, z);
         }

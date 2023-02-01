@@ -129,7 +129,7 @@ namespace SuperTiled2Unity.Editor
             }
         }
 
-        public static void BroadcastProperty(this GameObject go, CustomProperty property, Dictionary<int, GameObject> objectsById)
+        public static void BroadcastProperty(this GameObject go, CustomProperty property, Dictionary<int, GameObject> objectsById = null)
         {
             object objValue;
 
@@ -151,6 +151,12 @@ namespace SuperTiled2Unity.Editor
             }
             else if (property.m_Type == "object")
             {
+                if (objectsById == null)
+                {
+                    Debug.LogWarning("Object property without object dictionary");
+                    return;
+                }
+
                 var objectId = property.GetValueAsInt();
                 GameObject gameObject;
                 if (!objectsById.TryGetValue(objectId, out gameObject))
@@ -158,10 +164,8 @@ namespace SuperTiled2Unity.Editor
                     Debug.LogErrorFormat("Object property refers to invalid ID {0}", objectId);
                     return;
                 }
-                else
-                {
-                    objValue = gameObject;
-                }
+
+                objValue = gameObject;
             }
             else
             {
@@ -236,20 +240,20 @@ namespace SuperTiled2Unity.Editor
             // Property must be public and instanced and writable
             return component.GetType().GetProperties(BindingFlags.Instance | BindingFlags.Public).Where(
                 info =>
-                info.CanWrite &&
-                info.Name == name &&
-                info.PropertyType == valueType
-                ).FirstOrDefault();
+                    info.CanWrite &&
+                    info.Name == name &&
+                    info.PropertyType == valueType
+            ).FirstOrDefault();
         }
 
         private static FieldInfo FindFieldBySignature(MonoBehaviour component, string name, Type valueType)
         {
             return component.GetType().GetFields(BindingFlags.Instance | BindingFlags.Public).Where(
                 info =>
-                !info.IsInitOnly &&
-                info.Name == name &&
-                info.FieldType == valueType
-                ).FirstOrDefault();
+                    !info.IsInitOnly &&
+                    info.Name == name &&
+                    info.FieldType == valueType
+            ).FirstOrDefault();
         }
     }
 }

@@ -8,21 +8,26 @@ using UnityEngine.Serialization;
 public abstract class Interactible : MonoBehaviour
 {
     protected Collider Collider;
-    public bool CanInteract { get; private set; }
+    protected Action InteractingCallback;
 
-    public bool Used
-    {
-        get => _used;
-        protected set
-        {
-            _used = value;
-            if (value)
-                CanInteract = false;
-        }
-    }
+    public bool CloseEnough { get; private set; }
+
+    public bool CanInteract => CloseEnough && !Used;
+
+    public string Verb => verb;
+    // public bool Used
+    // {
+    //     get => _used;
+    //     protected set
+    //     {
+    //         _used = value;
+    //         if (value)
+    //             CanInteract = false;
+    //     }
+    // }
 
     [SerializeField] protected string verb;
-    [SerializeField] private bool _used;
+    [field: SerializeField] public bool Used { get; protected set; }
 
     protected Interactible()
     {
@@ -38,19 +43,22 @@ public abstract class Interactible : MonoBehaviour
     
     private void OnTriggerEnter(Collider other)
     {
-        if (Used)
-            return;
         Debug.Log("Interactible collider enter");
-        CanInteract = true;
+        CloseEnough = true;
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (Used)
-            return;
         Debug.Log("Interactible collider exit");
-        CanInteract = false;
+        CloseEnough = false;
     }
 
-    public abstract void Interact();
+    public void Interact()
+    {
+        if (!CanInteract)
+            return;
+        OnInteract();
+    }
+    
+    public abstract void OnInteract();
 }
