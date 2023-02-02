@@ -10,6 +10,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.Serialization;
 
 [RequireComponent(typeof(PlayerInput))]
+[RequireComponent(typeof(PlayerAnimationController))]
 public class PlayerController : MonoBehaviour
 {
     private const string DashAnimationName = "PepperArmature|Dash";
@@ -169,7 +170,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        // Debug.Log($"trigger enter with {other}");
+        Debug.Log($"trigger enter with {other}");
         if (!other.CompareTag("Interactible") || !other.GetComponent<Interactible>().CanInteract)
             return;
         _interactionTarget = other.gameObject.GetComponent<Interactible>();

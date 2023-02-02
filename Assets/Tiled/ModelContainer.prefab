@@ -72,11 +72,14 @@ MonoBehaviour:
     - SpawnPoint
     - Chest
     - CatTree
+    - Border
     _keys:
     - SpawnPoint
     - Chest
     - CatTree
+    - Border
     _values:
     - {fileID: 8984180617711188031, guid: 2b4ebb38fd1032247a5d39370411921d, type: 3}
     - {fileID: 6671886250286794392, guid: 31ea4d66d276a454abac4a57c448908d, type: 3}
     - {fileID: 7858960209383461756, guid: 9c3c3a937ce1e2c43aefe532829fed85, type: 3}
+    - {fileID: 2126461246435118160, guid: 85ec47e36da750f44bcccac52a1e9559, type: 3}

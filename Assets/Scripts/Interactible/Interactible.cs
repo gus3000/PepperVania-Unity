@@ -4,9 +4,10 @@ using UnityEngine.Serialization;
 
 
 [RequireComponent(typeof(Collider))]
-
 public abstract class Interactible : MonoBehaviour
 {
+    public Vector3 FocusPoint => Collider.bounds.center;
+
     protected Collider Collider;
     protected Action InteractingCallback;
 
@@ -39,11 +40,11 @@ public abstract class Interactible : MonoBehaviour
         Collider = GetComponent<Collider>();
         Debug.Log("Interactible start");
     }
-    
-    
+
+
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Interactible collider enter");
+        Debug.Log($"Interactible collider enter : {name}");
         CloseEnough = true;
     }
 
@@ -59,6 +60,6 @@ public abstract class Interactible : MonoBehaviour
             return;
         OnInteract();
     }
-    
+
     public abstract void OnInteract();
 }

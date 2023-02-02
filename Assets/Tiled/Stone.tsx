@@ -6,4 +6,9 @@
    <property name="empty" type="bool" value="true"/>
   </properties>
  </tile>
+ <tile id="75" class="Border">
+  <properties>
+   <property name="empty" type="bool" value="true"/>
+  </properties>
+ </tile>
 </tileset>

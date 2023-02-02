@@ -55,11 +55,11 @@
             }
         },
         "Rules/autotile_rules_stone.tmx": {
-            "scale": 23,
-            "selectedLayer": 0,
+            "scale": 3,
+            "selectedLayer": 2,
             "viewCenter": {
-                "x": 206.2391304347826,
-                "y": 327.7391304347826
+                "x": 232.83333333333337,
+                "y": 224
             }
         },
         "Stone.tsx": {
@@ -70,11 +70,11 @@
             "expandedObjectLayers": [
                 2
             ],
-            "scale": 5.5,
-            "selectedLayer": 2,
+            "scale": 3,
+            "selectedLayer": 1,
             "viewCenter": {
-                "x": 325.9090909090909,
-                "y": 402.3636363636364
+                "x": 348.83333333333337,
+                "y": 449
             }
         },
         "main.tmx": {
@@ -125,7 +125,7 @@
         "level.tmx"
     ],
     "project": "untitled.tiled-project",
-    "property.type": "int",
+    "property.type": "bool",
     "recentFiles": [
         "Rules/autotile_rules_stone.tmx",
         "Stone.tsx",

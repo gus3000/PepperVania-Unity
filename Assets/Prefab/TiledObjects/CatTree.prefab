@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 4269366333942937785}
   - component: {fileID: 3708400389897364118}
   - component: {fileID: 8082737276112167890}
+  - component: {fileID: 513977630205518275}
   m_Layer: 0
   m_Name: CatTree
   m_TagString: Interactible
@@ -45,7 +46,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.5, y: 2.3439736, z: 1.5}
+  m_Size: {x: 1.6923513, y: 2.3439736, z: 1.6515154}
   m_Center: {x: 0, y: 1.1719868, z: 0}
 --- !u!114 &8082737276112167890
 MonoBehaviour:
@@ -62,6 +63,19 @@ MonoBehaviour:
   verb: Se reposer
   <Used>k__BackingField: 0
   animStart: {x: 0, y: 0, z: -0.8}
+--- !u!65 &513977630205518275
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7858960209383461756}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0.5, z: 0}
 --- !u!1001 &7452202353555694868
 PrefabInstance:
   m_ObjectHideFlags: 0

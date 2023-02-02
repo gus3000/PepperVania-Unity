@@ -86,8 +86,6 @@ namespace Editor.Importer
                         Debug.LogWarning($"Attempt to summon object of type {superObject.m_Type} failed because there's no such prefab");
                         continue;
                     }
-
-                    var properties = superObject.GetComponent<SuperCustomProperties>();
                     
                     // Debug.Log($"{superObject.name} properties : {String.Join(", ",properties.m_Properties)}");
 
@@ -98,6 +96,7 @@ namespace Editor.Importer
                         tiledObjectContainer.transform
                     );
                     
+                    var properties = superObject.GetComponent<SuperCustomProperties>();
                     foreach (var prop in properties.m_Properties)
                     {
                         go.BroadcastProperty(prop);
@@ -151,7 +150,16 @@ namespace Editor.Importer
 
             foreach (var tile in tiles)
             {
-                GameObject go = Object.Instantiate(tileBasePrefab, prefabTransformParent, true);
+                var empty = tile.gameObject.GetSuperPropertyValueBool(EmptyKey, false);
+                GameObject go;
+                if (empty)
+                {
+                    _generatedPrefabs[tile.m_TileId] = _modelContainer.GetObject(tile.m_Type);
+                    Debug.Log($"preparing empty object prefab {_generatedPrefabs[tile.m_TileId].name}");
+                    continue;
+                }
+
+                go = Object.Instantiate(tileBasePrefab, prefabTransformParent, true);
 
                 var plane = go.transform.GetChild(0).GetChild(0);
 
@@ -184,8 +192,10 @@ namespace Editor.Importer
                     continue;
                 }
 
-                // Debug.Log($"Created {tileId} prefab at {AssetDatabase.GetAssetPath(go)}, should be at {PrefabPathFromTileId(tileId)}");
                 _generatedMeshes[tile.m_TileId] = meshCopy;
+
+
+                // Debug.Log($"Created {tileId} prefab at {AssetDatabase.GetAssetPath(go)}, should be at {PrefabPathFromTileId(tileId)}");
                 _generatedPrefabs[tile.m_TileId] = go;
             }
 
@@ -220,7 +230,7 @@ namespace Editor.Importer
         {
             var tileName = tile.gameObject.GetSuperPropertyValueString(TileNameKey, "");
             var empty = tile.gameObject.GetSuperPropertyValueBool(EmptyKey, false);
-            if (empty)
+            if (empty && tile.m_Type == "")
                 return null;
             if (!_generatedPrefabs.ContainsKey(tile.m_TileId))
             {
@@ -232,6 +242,11 @@ namespace Editor.Importer
 
             go.transform.position = GetTilePosition(coords, map);
             go.name = $"{go.transform.position} {tileName} {tile.m_Id} {tile.m_TileId}";
+            if (empty)
+            {
+                Debug.Log($"Not skipping tile of type {tile.m_Type}");
+                return go;
+            }
             var plane = go.transform.GetChild(0).GetChild(0);
             var meshFilter = plane.GetComponent<MeshFilter>();
             var mesh = meshFilter.sharedMesh;
