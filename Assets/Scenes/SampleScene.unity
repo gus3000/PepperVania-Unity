@@ -2698,6 +2698,34 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 958692997246562564, guid: 7c91a303bfd75ee4f83298976c7a728b, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.242
+      objectReference: {fileID: 0}
+    - target: {fileID: 958692997246562564, guid: 7c91a303bfd75ee4f83298976c7a728b, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.529
+      objectReference: {fileID: 0}
+    - target: {fileID: 1939965725850182001, guid: 7c91a303bfd75ee4f83298976c7a728b, type: 3}
+      propertyPath: m_Data.m_UpAxis
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1939965725850182001, guid: 7c91a303bfd75ee4f83298976c7a728b, type: 3}
+      propertyPath: m_Data.m_AimAxis
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1939965725850182001, guid: 7c91a303bfd75ee4f83298976c7a728b, type: 3}
+      propertyPath: m_Data.m_MaxLimit
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 1939965725850182001, guid: 7c91a303bfd75ee4f83298976c7a728b, type: 3}
+      propertyPath: m_Data.m_MinLimit
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 1939965725850182001, guid: 7c91a303bfd75ee4f83298976c7a728b, type: 3}
+      propertyPath: m_Data.m_WorldUpType
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3723792742989349476, guid: 7c91a303bfd75ee4f83298976c7a728b, type: 3}
       propertyPath: m_Camera
       value: 
