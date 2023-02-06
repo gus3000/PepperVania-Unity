@@ -3,7 +3,7 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "level.tmx",
+    "activeFile": "Stone.tsx",
     "expandedProjectPaths": [
         ".",
         "Templates",
@@ -73,8 +73,8 @@
             "scale": 3,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 348.83333333333337,
-                "y": 449
+                "x": 347.83333333333337,
+                "y": 386
             }
         },
         "main.tmx": {
@@ -128,8 +128,8 @@
     "property.type": "bool",
     "recentFiles": [
         "Rules/autotile_rules_stone.tmx",
-        "Stone.tsx",
         "level.tmx",
+        "Stone.tsx",
         "main.tmx",
         "prototype_v2.tsx",
         "Rules/autotile_rules.tmx",
