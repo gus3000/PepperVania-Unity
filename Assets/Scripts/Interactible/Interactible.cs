@@ -11,9 +11,10 @@ public abstract class Interactible : MonoBehaviour
     protected Collider Collider;
     protected Action InteractingCallback;
 
-    public bool CloseEnough { get; private set; }
+    // public bool CloseEnough { get; private set; }
 
-    public bool CanInteract => CloseEnough && !Used;
+    // public bool CanInteract => CloseEnough && !Used;
+    public bool CanInteract => !Used;
 
     public string Verb => verb;
     // public bool Used
@@ -38,20 +39,20 @@ public abstract class Interactible : MonoBehaviour
     protected virtual void Start()
     {
         Collider = GetComponent<Collider>();
-        Debug.Log("Interactible start");
+        // Debug.Log("Interactible start");
     }
 
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log($"Interactible collider enter : {name}");
-        CloseEnough = true;
+        // Debug.Log($"Interactible collider enter : {name}");
+        // CloseEnough = true;
     }
 
     private void OnTriggerExit(Collider other)
     {
-        Debug.Log("Interactible collider exit");
-        CloseEnough = false;
+        // Debug.Log("Interactible collider exit");
+        // CloseEnough = false;
     }
 
     public void Interact()

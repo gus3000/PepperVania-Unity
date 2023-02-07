@@ -4,17 +4,19 @@ using System.Collections.Generic;
 using System.Linq;
 using Camera;
 using DefaultNamespace;
+using Extensions;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Serialization;
+using UnityEngine.TextCore.Text;
 
 [RequireComponent(typeof(PlayerInput))]
 [RequireComponent(typeof(PlayerAnimationController))]
 public class PlayerController : MonoBehaviour
 {
     private const string DashAnimationName = "PepperArmature|Dash";
-    
+
     [SerializeField, Tooltip("in m/s")] private float speed = 2;
     [SerializeField] private float rotationSpeed = 10f;
     [SerializeField] private float dashDurationMultiplier = 1f;
@@ -25,8 +27,10 @@ public class PlayerController : MonoBehaviour
     private Animator _animator;
     private PlayerInput _playerInput;
     private IsoFollow _camera;
+
     private GameController _gameController;
-    private Rigidbody _rigidbody;
+
+    // private Rigidbody _rigidbody;
     private CapsuleCollider _playerCollider;
 
     // the SerializeField below this are for debug only
@@ -36,6 +40,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private bool _isDashing;
     [SerializeField] private float _timeSinceLastDash = 0;
     [SerializeField] private Interactible _interactionTarget = null;
+    private CharacterController _characterController;
     private float _deadZoneSize = 0.05f;
     private Vector2 _inputMovement;
 
@@ -56,8 +61,9 @@ public class PlayerController : MonoBehaviour
         _animator = GetComponentInChildren<Animator>();
         _inputMovement = Vector2.zero;
         _gameController = GameObject.FindWithTag("GameController").GetComponent<GameController>();
-        _rigidbody = GetComponent<Rigidbody>();
+        // _rigidbody = GetComponent<Rigidbody>();
         _playerCollider = GetComponent<CapsuleCollider>();
+        _characterController = GetComponent<CharacterController>();
 
         var dashAnimation = _animator.runtimeAnimatorController.animationClips.First(clip => clip.name == DashAnimationName);
         _baseDashDuration = dashAnimation.length;
@@ -99,9 +105,11 @@ public class PlayerController : MonoBehaviour
         if (_isDashing)
             velocityModifier *= dashSpeedBoost;
 
-        _rigidbody.velocity = _velocity * (speed * velocityModifier);
+        // _rigidbody.velocity = _velocity * (speed * velocityModifier);
+        // _rigidbody.AddForce(_velocity * (speed * velocityModifier), ForceMode.VelocityChange);
         // Move(_velocity * (speed * Time.deltaTime * velocityModifier));
         // transform.Translate(_velocity * (speed * Time.deltaTime * velocityModifier), Space.World);
+        _characterController.Move(_velocity * (speed * Time.deltaTime * velocityModifier));
     }
 
     void Move(Vector3 movement)
@@ -123,8 +131,8 @@ public class PlayerController : MonoBehaviour
             // var fixedMovement = FixMovement(movement, tip, raycastHit);
         }
 
-        // transform.Translate(movement, Space.World);
-        _rigidbody.MovePosition(transform.position + movement);
+        transform.Translate(movement, Space.World);
+        // _rigidbody.MovePosition(transform.position + movement);
     }
 
     private void OnDrawGizmosSelected()
@@ -175,6 +183,7 @@ public class PlayerController : MonoBehaviour
             Gizmos.DrawRay(tip, correctMovement);
         }
     }
+
     private Vector3 FixMovement(Vector3 movement, Vector3 tip, RaycastHit raycastHit)
     {
         var minimumDistanceFromWall = 0.1f;
@@ -184,11 +193,10 @@ public class PlayerController : MonoBehaviour
         var correctMovement = baseMove + restMoveFixed + (raycastHit.normal * minimumDistanceFromWall);
         // if ((tip + correctMovement - raycastHit.point).magnitude < minimumDistanceFromWall)
         // {
-            // correctMovement += raycastHit.normal * minimumDistanceFromWall;
-            // correctMovement *= (correctMovement.magnitude - minimumDistanceFromWall) / correctMovement.magnitude;
+        // correctMovement += raycastHit.normal * minimumDistanceFromWall;
+        // correctMovement *= (correctMovement.magnitude - minimumDistanceFromWall) / correctMovement.magnitude;
         // }
         return correctMovement;
-        
     }
 
     void HandleInput()
@@ -266,15 +274,16 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log($"trigger enter with {other}");
-        if (!other.CompareTag("Interactible") || !other.GetComponent<Interactible>().CanInteract)
+        Debug.Log($"trigger enter with {other}, has tag = {other.CompareTagIncludingParents("Interactible")}, has component = {other.GetComponentInParent<Interactible>() != null}, can interact = {other.GetComponentInParent<Interactible>().CanInteract}");
+        if (!other.CompareTagIncludingParents("Interactible") || !other.GetComponentInParent<Interactible>().CanInteract)
             return;
-        _interactionTarget = other.gameObject.GetComponent<Interactible>();
+        Debug.Log("yup, that's interactible, setting interaction target");
+        _interactionTarget = other.GetComponentInParent<Interactible>();
     }
 
     private void OnTriggerExit(Collider other)
     {
-        if (_interactionTarget != other.gameObject.GetComponent<Interactible>())
+        if (_interactionTarget != other.gameObject.GetComponentInParent<Interactible>())
             return;
 
         _interactionTarget = null;
@@ -355,6 +364,12 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        // transform.Translate(velocity * (speed * Time.fixedDeltaTime),Space.World);
+        var velocityModifier = 1f;
+        if (_isDashing)
+            velocityModifier *= dashSpeedBoost;
+
+        // _rigidbody.velocity = _velocity * (speed * velocityModifier);
+        // _rigidbody.AddForce(_velocity * (speed * velocityModifier), ForceMode.VelocityChange);
+        // _rigidbody.AddRelativeForce(_velocity * (speed * velocityModifier), ForceMode.VelocityChange);
     }
 }

@@ -10,6 +10,7 @@ namespace Camera
         public const float Angle = 30;
         public const float DistanceFromPlayer = 10;
 
+        [SerializeField] private Transform pointToFollow;
         [SerializeField] private IsoDirection direction = IsoDirection.BackwardsLeft;
         [SerializeField] private float followSpeed = 5;
         // [SerializeField] private float smoothTime = 5f;
@@ -17,24 +18,23 @@ namespace Camera
         public IsoDirection Direction => direction;
 
         private Vector3 _delta;
-        private GameObject _player;
         private Vector3 _velocity;
 
         private void Start()
         {
-            _player = GameObject.FindWithTag("Player");
+            // _pointToFollow = GameObject.FindWithTag("Player");
             var angleVector = new Vector3(Angle, (float)direction, 0);
             var cameraTransform = transform;
             cameraTransform.rotation = Quaternion.Euler(angleVector);
             _delta = -cameraTransform.forward * DistanceFromPlayer + Vector3.up * .5f;
 
-            var position = _player.transform.position;
+            var position = pointToFollow.position;
             cameraTransform.position = position + _delta;
         }
 
         private void LateUpdate()
         {
-            var playerPosition = _player.transform.position;
+            var playerPosition = pointToFollow.position;
             var cameraPosition = transform.position;
             var deltaPosition = playerPosition + _delta;
             var distanceToDelta = Vector3.Distance(cameraPosition, deltaPosition);
