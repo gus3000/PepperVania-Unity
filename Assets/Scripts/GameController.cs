@@ -6,6 +6,7 @@ using UnityEngine.InputSystem;
 
 public class GameController : MonoBehaviour
 {
+
     private PlayerController _player;
     private UiController _uiController;
     public float StartTime { get; private set; }

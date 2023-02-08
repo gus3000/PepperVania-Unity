@@ -3,11 +3,11 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "Stone.tsx",
+    "activeFile": "level.tmx",
     "expandedProjectPaths": [
         ".",
-        "Templates",
-        "Rules"
+        "Rules",
+        "Templates"
     ],
     "file.lastUsedOpenFilter": "All Files (*)",
     "fileStates": {
@@ -70,11 +70,11 @@
             "expandedObjectLayers": [
                 2
             ],
-            "scale": 3,
-            "selectedLayer": 1,
+            "scale": 11,
+            "selectedLayer": 2,
             "viewCenter": {
-                "x": 347.83333333333337,
-                "y": 386
+                "x": 332.77272727272725,
+                "y": 365.1818181818182
             }
         },
         "main.tmx": {
@@ -128,8 +128,8 @@
     "property.type": "bool",
     "recentFiles": [
         "Rules/autotile_rules_stone.tmx",
-        "level.tmx",
         "Stone.tsx",
+        "level.tmx",
         "main.tmx",
         "prototype_v2.tsx",
         "Rules/autotile_rules.tmx",

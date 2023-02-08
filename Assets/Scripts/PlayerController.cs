@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Animation;
 using Camera;
 using DefaultNamespace;
 using Extensions;
@@ -22,7 +23,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float dashDurationMultiplier = 1f;
     [SerializeField] private float dashSpeedBoost = 2f;
     [SerializeField] private float dashCooldown = 1f;
-    [SerializeField] private bool canMove = true;
+    private bool canMove => _playerAnimationController.CanMove;
 
     private Animator _animator;
     private PlayerInput _playerInput;
@@ -40,6 +41,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private bool _isDashing;
     [SerializeField] private float _timeSinceLastDash = 0;
     [SerializeField] private Interactible _interactionTarget = null;
+    private PlayerAnimationController _playerAnimationController;
     private CharacterController _characterController;
     private float _deadZoneSize = 0.05f;
     private Vector2 _inputMovement;
@@ -48,8 +50,7 @@ public class PlayerController : MonoBehaviour
     private static readonly int SpeedAnimHash = Animator.StringToHash("speed");
     private static readonly int DashTriggerHash = Animator.StringToHash("dash");
     private static readonly int DashSpeedHash = Animator.StringToHash("dashSpeed");
-    private static readonly int Sleeping = Animator.StringToHash("sleeping");
-    private static readonly int Rest = Animator.StringToHash("rest");
+
 
     public bool HasMoved { get; private set; }
 
@@ -64,6 +65,7 @@ public class PlayerController : MonoBehaviour
         // _rigidbody = GetComponent<Rigidbody>();
         _playerCollider = GetComponent<CapsuleCollider>();
         _characterController = GetComponent<CharacterController>();
+        _playerAnimationController = GetComponent<PlayerAnimationController>();
 
         var dashAnimation = _animator.runtimeAnimatorController.animationClips.First(clip => clip.name == DashAnimationName);
         _baseDashDuration = dashAnimation.length;
@@ -109,6 +111,10 @@ public class PlayerController : MonoBehaviour
         // _rigidbody.AddForce(_velocity * (speed * velocityModifier), ForceMode.VelocityChange);
         // Move(_velocity * (speed * Time.deltaTime * velocityModifier));
         // transform.Translate(_velocity * (speed * Time.deltaTime * velocityModifier), Space.World);
+        if (_playerAnimationController.IsInAnimatedMovement)
+            return;
+
+
         _characterController.Move(_velocity * (speed * Time.deltaTime * velocityModifier));
     }
 
@@ -274,7 +280,8 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log($"trigger enter with {other}, has tag = {other.CompareTagIncludingParents("Interactible")}, has component = {other.GetComponentInParent<Interactible>() != null}, can interact = {other.GetComponentInParent<Interactible>().CanInteract}");
+        Debug.Log(
+            $"trigger enter with {other}, has tag = {other.CompareTagIncludingParents("Interactible")}, has component = {other.GetComponentInParent<Interactible>() != null}, can interact = {other.GetComponentInParent<Interactible>()?.CanInteract}");
         if (!other.CompareTagIncludingParents("Interactible") || !other.GetComponentInParent<Interactible>().CanInteract)
             return;
         Debug.Log("yup, that's interactible, setting interaction target");
@@ -289,73 +296,14 @@ public class PlayerController : MonoBehaviour
         _interactionTarget = null;
     }
 
-    public void PlayAnimation(PlayerAnimation animation)
-    {
-        StartCoroutine(PlayAnimationSubroutine(animation));
-    }
+    // public void PlayAnimation(PlayerAnimation animation)
+    // {
+    //     StartCoroutine(_playerAnimationController.PlayAnimationSubroutine(animation));
+    // }
 
-    private IEnumerator PlayAnimationSubroutine(PlayerAnimation animation)
-    {
-        Debug.Log($"Play animation {animation}");
-        var oldCanMove = canMove;
-        canMove = false;
-        switch (animation)
-        {
-            case PlayerAnimation.Sleep:
-                break;
-            case PlayerAnimation.Rest:
-                _animator.SetBool(Rest, true);
-                // _animator.SetBool(Sleeping, true);
-                break;
-            default:
-                throw new ArgumentOutOfRangeException(nameof(animation), animation, null);
-        }
+    public void FollowSequence(AnimationSequence sequence) => StartCoroutine(_playerAnimationController.FollowSequence(sequence));
+    
 
-        yield return null;
-        var state = _animator.GetCurrentAnimatorStateInfo(0);
-        while (!state.IsName("Climb Tree"))
-        {
-            Debug.Log("waiting for anim to start");
-            yield return null;
-            state = _animator.GetCurrentAnimatorStateInfo(0);
-        }
-
-        Debug.Log("anim started !");
-        // Debug.Break();
-
-        canMove = oldCanMove;
-    }
-
-    public IEnumerator ForceMoveTo(Vector3 pos, float angle)
-    {
-        var trans = transform;
-        while ((pos - trans.position).magnitude > Time.deltaTime)
-        {
-            Debug.Log($"going from {trans.position} to {pos}");
-            _velocity = (pos - trans.position).normalized;
-            yield return null;
-        }
-
-        _velocity = Vector3.zero;
-
-
-        trans.rotation = Quaternion.Euler(0, angle, 0);
-        yield return null;
-        // while (Mathf.Abs(trans.rotation.eulerAngles.y - angle) > Time.deltaTime)
-        // {
-        // _angle = Vector3.SignedAngle(transform.forward, new Vector3(0, angle, 0), Vector3.up);
-        // transform.Rotate(Vector3.up, _angle * rotationSpeed * Time.deltaTime);
-        // }
-    }
-
-    public IEnumerator StartAnimationAt(Vector3 startPos, PlayerAnimation animation)
-    {
-        canMove = false;
-        yield return ForceMoveTo(startPos, 0);
-        yield return PlayAnimationSubroutine(animation);
-
-        canMove = true;
-    }
 
     public bool Won { get; protected set; }
 
@@ -364,9 +312,9 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        var velocityModifier = 1f;
-        if (_isDashing)
-            velocityModifier *= dashSpeedBoost;
+        // var velocityModifier = 1f;
+        // if (_isDashing)
+        //     velocityModifier *= dashSpeedBoost;
 
         // _rigidbody.velocity = _velocity * (speed * velocityModifier);
         // _rigidbody.AddForce(_velocity * (speed * velocityModifier), ForceMode.VelocityChange);

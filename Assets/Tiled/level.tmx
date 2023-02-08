@@ -118,7 +118,7 @@
     <property name="itemId" type="int" value="38"/>
    </properties>
   </object>
-  <object id="16" class="Chest" x="364" y="364" width="8" height="8" rotation="180">
+  <object id="16" class="Chest" x="356" y="356" width="8" height="8">
    <properties>
     <property name="itemId" type="int" value="14"/>
    </properties>

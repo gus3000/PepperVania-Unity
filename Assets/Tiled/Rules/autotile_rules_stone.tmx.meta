@@ -9,7 +9,45 @@ ScriptedImporter:
   assetBundleVariant: 
   script: {fileID: 11500000, guid: 1fa25d03934ea624a82bf2fcee6f0873, type: 3}
   missingFiles: []
-  errors: []
+  errors:
+  - Errors detected in tileset '../Stone.tsx'. Check the tileset inspector for more
+    details. Your map may be broken until these are fixed.
+  - Could not find tile 72. Make sure the tilesets were successfully imported.
+  - Could not find tile 68. Make sure the tilesets were successfully imported.
+  - Could not find tile 72. Make sure the tilesets were successfully imported.
+  - Could not find tile 68. Make sure the tilesets were successfully imported.
+  - Could not find tile 76. Make sure the tilesets were successfully imported.
+  - Could not find tile 132. Make sure the tilesets were successfully imported.
+  - Could not find tile 67. Make sure the tilesets were successfully imported.
+  - Could not find tile 69. Make sure the tilesets were successfully imported.
+  - Could not find tile 4. Make sure the tilesets were successfully imported.
+  - Could not find tile 321. Make sure the tilesets were successfully imported.
+  - Could not find tile 193. Make sure the tilesets were successfully imported.
+  - Could not find tile 259. Make sure the tilesets were successfully imported.
+  - Could not find tile 261. Make sure the tilesets were successfully imported.
+  - Could not find tile 260. Make sure the tilesets were successfully imported.
+  - Could not find tile 257. Make sure the tilesets were successfully imported.
+  - Could not find tile 1. Make sure the tilesets were successfully imported.
+  - Could not find tile 133. Make sure the tilesets were successfully imported.
+  - Could not find tile 5. Make sure the tilesets were successfully imported.
+  - Could not find tile 131. Make sure the tilesets were successfully imported.
+  - Could not find tile 3. Make sure the tilesets were successfully imported.
+  - Could not find tile 7. Make sure the tilesets were successfully imported.
+  - Could not find tile 9. Make sure the tilesets were successfully imported.
+  - Could not find tile 137. Make sure the tilesets were successfully imported.
+  - Could not find tile 135. Make sure the tilesets were successfully imported.
+  - Could not find tile 11. Make sure the tilesets were successfully imported.
+  - Could not find tile 13. Make sure the tilesets were successfully imported.
+  - Could not find tile 141. Make sure the tilesets were successfully imported.
+  - Could not find tile 139. Make sure the tilesets were successfully imported.
+  - Could not find tile 8. Make sure the tilesets were successfully imported.
+  - Could not find tile 73. Make sure the tilesets were successfully imported.
+  - Could not find tile 71. Make sure the tilesets were successfully imported.
+  - Could not find tile 136. Make sure the tilesets were successfully imported.
+  - Could not find tile 77. Make sure the tilesets were successfully imported.
+  - Could not find tile 75. Make sure the tilesets were successfully imported.
+  - Could not find tile 140. Make sure the tilesets were successfully imported.
+  - Could not find tile 12. Make sure the tilesets were successfully imported.
   warnings: []
   missingSortingLayers: []
   missingLayers: []

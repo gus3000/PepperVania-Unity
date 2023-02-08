@@ -15,7 +15,7 @@ public class Chest : Interactible
     protected override void Start()
     {
         base.Start();
-        Debug.Log("Chest start");
+        // Debug.Log("Chest start");
         _animator = GetComponentInChildren<Animator>();
         // InteractingCallback = () => typeof(Chest).GetMethod(interactingCallbackName)?.Invoke(this, null);
         InteractingCallback = () => GiveItem(itemId);

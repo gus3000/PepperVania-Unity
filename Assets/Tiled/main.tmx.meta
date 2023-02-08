@@ -9,7 +9,47 @@ ScriptedImporter:
   assetBundleVariant: 
   script: {fileID: 11500000, guid: 1fa25d03934ea624a82bf2fcee6f0873, type: 3}
   missingFiles: []
-  errors: []
+  errors:
+  - Errors detected in tileset 'Stone.tsx'. Check the tileset inspector for more
+    details. Your map may be broken until these are fixed.
+  - Could not find tile 200. Make sure the tilesets were successfully imported.
+  - Could not find tile 196. Make sure the tilesets were successfully imported.
+  - Could not find tile 200. Make sure the tilesets were successfully imported.
+  - Could not find tile 321. Make sure the tilesets were successfully imported.
+  - Could not find tile 195. Make sure the tilesets were successfully imported.
+  - Could not find tile 388. Make sure the tilesets were successfully imported.
+  - Could not find tile 197. Make sure the tilesets were successfully imported.
+  - Could not find tile 387. Make sure the tilesets were successfully imported.
+  - Could not find tile 263. Make sure the tilesets were successfully imported.
+  - Could not find tile 389. Make sure the tilesets were successfully imported.
+  - Could not find tile 132. Make sure the tilesets were successfully imported.
+  - Could not find tile 385. Make sure the tilesets were successfully imported.
+  - Could not find tile 260. Make sure the tilesets were successfully imported.
+  - Could not find tile 449. Make sure the tilesets were successfully imported.
+  - Could not find tile 131. Make sure the tilesets were successfully imported.
+  - Could not find tile 133. Make sure the tilesets were successfully imported.
+  - Could not find tile 129. Make sure the tilesets were successfully imported.
+  - Could not find tile 196. Make sure the tilesets were successfully imported.
+  - Could not find tile 259. Make sure the tilesets were successfully imported.
+  - Could not find tile 261. Make sure the tilesets were successfully imported.
+  - Could not find tile 139. Make sure the tilesets were successfully imported.
+  - Could not find tile 141. Make sure the tilesets were successfully imported.
+  - Could not find tile 267. Make sure the tilesets were successfully imported.
+  - Could not find tile 269. Make sure the tilesets were successfully imported.
+  - Could not find tile 135. Make sure the tilesets were successfully imported.
+  - Could not find tile 137. Make sure the tilesets were successfully imported.
+  - Could not find tile 265. Make sure the tilesets were successfully imported.
+  - "Custom importer 'TilesTo3dObjectImporter' threw an exception. Message = 'Object
+    reference not set to an instance of an object', Stack:\n  at Editor.Importer.TilesTo3dObjectImporter.DestroyPrefabsInScene
+    () [0x00000] in C:\\Users\\gus3000\\UnityProjects\\PepperVania\\Assets\\Scripts\\Editor\\Importer\\TilesTo3dObjectImporter.cs:207
+    \r\n  at Editor.Importer.TilesTo3dObjectImporter.PreparePrefabs (System.String
+    prefabPrefix, System.Collections.Generic.IEnumerable`1[T] tiles) [0x00016] in
+    C:\\Users\\gus3000\\UnityProjects\\PepperVania\\Assets\\Scripts\\Editor\\Importer\\TilesTo3dObjectImporter.cs:141
+    \r\n  at Editor.Importer.TilesTo3dObjectImporter.TmxAssetImported (SuperTiled2Unity.Editor.TmxAssetImportedArgs
+    args) [0x00239] in C:\\Users\\gus3000\\UnityProjects\\PepperVania\\Assets\\Scripts\\Editor\\Importer\\TilesTo3dObjectImporter.cs:113
+    \r\n  at SuperTiled2Unity.Editor.TmxAssetImporter.RunCustomImporterType (System.Type
+    type) [0x00048] in C:\\Users\\gus3000\\UnityProjects\\PepperVania\\Assets\\External
+    Packages\\SuperTiled2Unity\\Scripts\\Editor\\Importers\\TmxAssetImporter.cs:497 "
   warnings: []
   missingSortingLayers: []
   missingLayers: []
