@@ -53,6 +53,7 @@ public class PlayerController : MonoBehaviour
 
 
     public bool HasMoved { get; private set; }
+    public float DashDurationMultiplier => dashDurationMultiplier;
 
     void Start()
     {

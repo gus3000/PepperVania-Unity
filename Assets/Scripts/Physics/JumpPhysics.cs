@@ -5,7 +5,7 @@ namespace Physics
 {
     
     // inspired by https://gustavcorpas.medium.com/building-a-customizable-jump-in-unity-using-animation-curves-a168a618428d
-    [CreateAssetMenu(fileName = "Jump", menuName = "Movement/Jump")]
+    [CreateAssetMenu(fileName = "Jump", menuName = "Player/Movement/Jump")]
     public class JumpPhysics : ScriptableObject
     {
         [SerializeField] private float initalJumpForce;
