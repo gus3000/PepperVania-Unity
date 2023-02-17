@@ -5,6 +5,7 @@ using DefaultNamespace;
 using UI;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.Serialization;
 
 public class UiController : MonoBehaviour
@@ -19,17 +20,21 @@ public class UiController : MonoBehaviour
     [SerializeField] private CanvasGroup androidControls;
 
     private PlayerController _player;
+    private PlayerInput _playerInput;
     private Coroutine _currentCoroutine;
     private GameController _gameController;
+    private ControlSchemeSpecific[] _controleSchemeSpecificComponents;
 
     private void Start()
     {
         _player = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
+        _playerInput = _player.GetComponent<PlayerInput>();
         _gameController = GameObject.FindWithTag("GameController").GetComponent<GameController>();
         controlsTutorial.ShouldShow = () => (Time.time - _gameController.StartTime > showControlsTimer) && !_player.HasMoved;
         interactUi.ShouldShow = () => _player.InteractionTarget != null && _player.InteractionTarget.CanInteract;
         interactUiText.Text = () => _player.InteractionTarget == null ? "pouet" : _player.InteractionTarget.Verb;
         winDebug.ShouldShow = () => _player.Won;
+        _controleSchemeSpecificComponents = FindObjectsOfType<ControlSchemeSpecific>();
 
         ConfigureUi();
     }
@@ -43,7 +48,7 @@ public class UiController : MonoBehaviour
     }
 
 
-    private void ConfigureUi()
+    public void ConfigureUi()
     {
         List<string> toEnable = new();
         List<string> toDisable = new();
@@ -80,6 +85,12 @@ public class UiController : MonoBehaviour
                     continue;
                 canvasGroup.alpha = 0;
             }
+        }
+
+        var scheme = _playerInput.currentControlScheme;
+        foreach (var controlSchemeSpecificComponent in _controleSchemeSpecificComponents)
+        {
+            controlSchemeSpecificComponent.ChangeControlScheme(scheme);
         }
     }
 }

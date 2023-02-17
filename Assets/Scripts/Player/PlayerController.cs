@@ -286,7 +286,7 @@ public class PlayerController : MonoBehaviour
             return; //not started yet
 
         Debug.Log($"controls changed to {_playerInput.currentControlScheme}");
-        _gameController.ChangeControls(_playerInput);
+        _gameController.ChangeControls();
     }
 
     void OnInteract()

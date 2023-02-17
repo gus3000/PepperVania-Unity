@@ -23,8 +23,8 @@ public class GameController : MonoBehaviour
 
     }
 
-    public void ChangeControls(PlayerInput playerInput)
+    public void ChangeControls()
     {
-        
+        _uiController.ConfigureUi();
     }
 }
