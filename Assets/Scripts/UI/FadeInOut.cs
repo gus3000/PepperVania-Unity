@@ -8,7 +8,7 @@ namespace UI
     public class FadeInOut : MonoBehaviour
     {
         [SerializeField] private float fadeTime = 1f;
-
+        [SerializeField] private bool debugShouldShow;
         private bool _showing;
         private CanvasGroup _canvasGroup;
         private Coroutine _currentCoroutine;
@@ -24,6 +24,7 @@ namespace UI
         private void Update()
         {
             // Debug.Log($"{name} should show ? {ShouldShow()}");
+            debugShouldShow = ShouldShow();
             if (ShouldShow() && !_showing)
                 ToggleShowing(true);
             else if (!ShouldShow() && _showing)

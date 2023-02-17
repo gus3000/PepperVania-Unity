@@ -4986,7 +4986,9 @@ GameObject:
   - component: {fileID: 3723792742989349476}
   - component: {fileID: 3723792742989349499}
   - component: {fileID: 1154773183265771289}
+  - component: {fileID: 7695986992786682492}
   - component: {fileID: 5006053886969825775}
+  - component: {fileID: 5139608441730452118}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -5079,6 +5081,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   headTrackerFocus: {fileID: 958692997246562564}
   canMove: 1
+--- !u!114 &7695986992786682492
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3723792742989349502}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 962f2360810c4242b282e39ae129d2d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canMove: 1
 --- !u!143 &5006053886969825775
 CharacterController:
   m_ObjectHideFlags: 0
@@ -5097,6 +5112,19 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0.25, z: 0}
+--- !u!114 &5139608441730452118
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3723792742989349502}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 962f2360810c4242b282e39ae129d2d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canMove: 1
 --- !u!1 &6973266258776986491
 GameObject:
   m_ObjectHideFlags: 0

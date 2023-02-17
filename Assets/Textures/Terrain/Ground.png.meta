@@ -129,7 +129,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Ground_0
+      name: Ground_0_sides_0_corners
       rect:
         serializedVersion: 2
         x: 0
@@ -150,7 +150,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Ground_1
+      name: Ground_0_sides_1_corner
       rect:
         serializedVersion: 2
         x: 16
@@ -164,14 +164,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3a9c2f8c44cebef4eaabaa61308871c8
-      internalID: -1047203210
+      spriteID: bba1879e86cb89d40b6faa0443cc30c2
+      internalID: 983892843
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Ground_2
+      name: Ground_0_sides_2_corners_next
       rect:
         serializedVersion: 2
         x: 32
@@ -185,14 +185,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1cbfd4ea18356ed459a4ddf10c0a7431
-      internalID: -1809643915
+      spriteID: 05e6a7e627658d84fa5f80f2b222be3b
+      internalID: -331723782
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Ground_3
+      name: Ground_0_sides_2_corners_opposite
       rect:
         serializedVersion: 2
         x: 48
@@ -206,14 +206,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d7a7296f964c0db4c92d1ff4294e7d05
-      internalID: -1494026002
+      spriteID: 00d980b5efb7c2b4aa0e72256e07efc7
+      internalID: 1292774458
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Ground_4
+      name: Ground_0_sides_3_corners
       rect:
         serializedVersion: 2
         x: 64
@@ -227,14 +227,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b4195399a3b486e43b2628f1302d9240
-      internalID: 17506265
+      spriteID: 6251bb47beba2d64180a9e562db3420c
+      internalID: 81151378
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Ground_5
+      name: Ground_0_sides_4_corners
       rect:
         serializedVersion: 2
         x: 80
@@ -248,14 +248,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d7308e9eb717cf74c8c2b4fccb4e3aab
-      internalID: -1691225470
+      spriteID: 00d60af2c77eb7a40b2ad7ad72217eeb
+      internalID: -1394312981
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Ground_6
+      name: Ground_1_side_0_corners
       rect:
         serializedVersion: 2
         x: 96
@@ -269,14 +269,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 770d80a49a01c2243a65366ad4b33e3c
-      internalID: 937485192
+      spriteID: ea4db0178a595524999e3010b61c2879
+      internalID: 2066419736
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Ground_7
+      name: Ground_1_side_1_corner_left
       rect:
         serializedVersion: 2
         x: 112
@@ -290,14 +290,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e523aab6d75e9f044aa9119c8071b07b
-      internalID: 584716567
+      spriteID: 1a69794d0cc085d43aaa51194558f9c3
+      internalID: -2140420874
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Ground_8
+      name: Ground_1_side_1_corner_right
       rect:
         serializedVersion: 2
         x: 128
@@ -311,14 +311,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 60b375d84ade97947a122e9bdfd0a029
-      internalID: 701661436
+      spriteID: c4cc43072e1318445996fd0e530c25f4
+      internalID: 1944119970
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Ground_9
+      name: Ground_1_side_2_corners
       rect:
         serializedVersion: 2
         x: 144
@@ -332,14 +332,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ee16558c65f1f714885c38072778cd84
-      internalID: 1968906330
+      spriteID: 078e64c0cdf66a149952862902efe9f9
+      internalID: 620261633
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Ground_10
+      name: Ground_2_sides_next_0_corners
       rect:
         serializedVersion: 2
         x: 160
@@ -353,14 +353,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 19d618c90de8dbd4991f5ae3db7be312
-      internalID: 1481539917
+      spriteID: 210b9317dca96ca42a6bfc1dc43491ec
+      internalID: -443551543
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Ground_11
+      name: Ground_2_sides_next_1_corner
       rect:
         serializedVersion: 2
         x: 176
@@ -374,18 +374,18 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 97083144dbd3ef34fa50edf8824377d4
-      internalID: -1810506749
+      spriteID: bcb083f9d1fe8d740a2fe308a287da6a
+      internalID: -826039128
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Ground_12
+      name: Ground_2_sides_opposite
       rect:
         serializedVersion: 2
-        x: 0
-        y: 480
+        x: 192
+        y: 496
         width: 16
         height: 16
       alignment: 0
@@ -395,8 +395,113 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e41a7300b5e5624429f00559a4683e4c
-      internalID: 1152172501
+      spriteID: 2e57653a73047af49b289906b44c9410
+      internalID: 2119392987
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ground_3_sides
+      rect:
+        serializedVersion: 2
+        x: 208
+        y: 496
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0b9f3ecaddfca1444921fc20bb8a93ec
+      internalID: -1443489406
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ground_4_sides
+      rect:
+        serializedVersion: 2
+        x: 224
+        y: 496
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c2fd32993ae2f304cb6c659997563646
+      internalID: -1567906662
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ground_back
+      rect:
+        serializedVersion: 2
+        x: 240
+        y: 496
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c2e8f5810e521fe4aa012360b549952c
+      internalID: 247444373
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ground_full
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 496
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a696ee97fad47ce4b87cc5e4a2fa9d81
+      internalID: -982308144
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Ground_water
+      rect:
+        serializedVersion: 2
+        x: 272
+        y: 496
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c213b0fc9497efe47839ba00954d6bc9
+      internalID: -762194137
       vertices: []
       indices: 
       edges: []
@@ -412,19 +517,24 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      Ground_10: 1481539917
-      Ground_9: 1968906330
-      Ground_12: 1152172501
-      Ground_11: -1810506749
-      Ground_5: -1691225470
-      Ground_3: -1494026002
-      Ground_0: -138810541
-      Ground_4: 17506265
-      Ground_8: 701661436
-      Ground_6: 937485192
-      Ground_2: -1809643915
-      Ground_7: 584716567
-      Ground_1: -1047203210
+      Ground_0_sides_4_corners: 2066419736
+      Ground_4_sides: -1567906662
+      Ground_3_sides: -1443489406
+      Ground_0_sides_1_corner: -331723782
+      Ground_1_side_1_corner_right: 620261633
+      Ground_back: 247444373
+      Ground_1_side_2_corners: -443551543
+      Ground_full: -982308144
+      Ground_0_sides_0_corners: -331723782
+      Ground_1_side_0_corners: -2140420874
+      Ground_2_sides_opposite: 2119392987
+      Ground_0_sides_2_corners_opposite: 81151378
+      Ground_2_sides_next_1_corner: -826039128
+      Ground_1_side_1_corner_left: 1944119970
+      Ground_0_sides_3_corners: -1394312981
+      Ground_2_sides_next_0_corners: -826039128
+      Ground_water: -762194137
+      Ground_0_sides_2_corners_next: 1292774458
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

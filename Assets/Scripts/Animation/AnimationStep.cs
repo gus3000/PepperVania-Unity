@@ -1,10 +1,13 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace Animation
 {
-    public abstract class AnimationStep
+    [Serializable]
+    public class AnimationStep
     {
-        protected float duration = 1f;
+        [SerializeField] protected float duration = 1f;
+        [SerializeField] protected string pouet = "ha";
 
         public float Duration => duration;
 
@@ -12,5 +15,8 @@ namespace Animation
         public virtual void Init()
         {
         }
+
+        // public abstract Vector3 GetPoint(float timeSinceStart);
+        public virtual Vector3 GetPoint(float timeSinceStart) => Vector3.zero;
     }
 }

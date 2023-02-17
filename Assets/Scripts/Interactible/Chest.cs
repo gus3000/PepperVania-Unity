@@ -4,6 +4,7 @@ using UnityEngine.Events;
 
 public class Chest : Interactible
 {
+    public ChestType chestType;
     public int itemId;
 
     protected Animator _animator;
@@ -17,8 +18,21 @@ public class Chest : Interactible
         base.Start();
         // Debug.Log("Chest start");
         _animator = GetComponentInChildren<Animator>();
-        // InteractingCallback = () => typeof(Chest).GetMethod(interactingCallbackName)?.Invoke(this, null);
-        InteractingCallback = () => GiveItem(itemId);
+        InteractingCallback = () =>
+        {
+            switch (chestType)
+            {
+                case ChestType.GiveItem:
+                    GiveItem(itemId);
+                    break;
+                case ChestType.DebugWin:
+                    GameObject.FindWithTag("Player").GetComponent<PlayerController>().Won = true;
+                    break;
+                default:
+                    GiveNothing();
+                    break;
+            }
+        };
     }
 
     public override void OnInteract()
@@ -43,5 +57,11 @@ public class Chest : Interactible
     public void GiveNothing()
     {
         Debug.Log("You got scammed !");
+    }
+
+    public enum ChestType
+    {
+        GiveItem,
+        DebugWin
     }
 }

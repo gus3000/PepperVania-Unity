@@ -6,6 +6,7 @@ using Animation;
 using Camera;
 using DefaultNamespace;
 using Extensions;
+using Player;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -14,16 +15,17 @@ using UnityEngine.TextCore.Text;
 
 [RequireComponent(typeof(PlayerInput))]
 [RequireComponent(typeof(PlayerAnimationController))]
+[RequireComponent(typeof(PlayerAbilityController))]
 public class PlayerController : MonoBehaviour
 {
-    private const string DashAnimationName = "PepperArmature|Dash";
+    public Vector3 controllerVelocity;
 
     [SerializeField, Tooltip("in m/s")] private float speed = 2;
     [SerializeField] private float rotationSpeed = 10f;
-    [SerializeField] private float dashDurationMultiplier = 1f;
+    [SerializeField] private float fallingSpeed = 3f; //TODO replace with curve
     [SerializeField] private float dashSpeedBoost = 2f;
-    [SerializeField] private float dashCooldown = 1f;
-    private bool canMove => _playerAnimationController.CanMove;
+    
+    private bool CanMove => _playerAnimationController.CanMove && _playerAbilityController.CanMove;
 
     private Animator _animator;
     private PlayerInput _playerInput;
@@ -37,23 +39,26 @@ public class PlayerController : MonoBehaviour
     // the SerializeField below this are for debug only
     [SerializeField] private Vector3 _velocity;
     private float _angle;
-    [SerializeField] private float _baseDashDuration;
-    [SerializeField] private bool _isDashing;
-    [SerializeField] private float _timeSinceLastDash = 0;
     [SerializeField] private Interactible _interactionTarget = null;
     private PlayerAnimationController _playerAnimationController;
+    private PlayerAbilityController _playerAbilityController;
     private CharacterController _characterController;
     private float _deadZoneSize = 0.05f;
     private Vector2 _inputMovement;
 
 
     private static readonly int SpeedAnimHash = Animator.StringToHash("speed");
-    private static readonly int DashTriggerHash = Animator.StringToHash("dash");
-    private static readonly int DashSpeedHash = Animator.StringToHash("dashSpeed");
 
 
     public bool HasMoved { get; private set; }
-    public float DashDurationMultiplier => dashDurationMultiplier;
+    public bool Won { get; set; }
+    public Interactible InteractionTarget => _interactionTarget;
+
+    public Vector3 Velocity
+    {
+        get => _velocity;
+        set => _velocity = value;
+    }
 
     void Start()
     {
@@ -67,9 +72,8 @@ public class PlayerController : MonoBehaviour
         _playerCollider = GetComponent<CapsuleCollider>();
         _characterController = GetComponent<CharacterController>();
         _playerAnimationController = GetComponent<PlayerAnimationController>();
+        _playerAbilityController = GetComponent<PlayerAbilityController>();
 
-        var dashAnimation = _animator.runtimeAnimatorController.animationClips.First(clip => clip.name == DashAnimationName);
-        _baseDashDuration = dashAnimation.length;
         HasMoved = false;
 
         Debug.Log($"clamped to 1 : {Vector3.ClampMagnitude(Vector3.forward, 1)}");
@@ -92,20 +96,28 @@ public class PlayerController : MonoBehaviour
         var cameraAngle = (int)_camera.Direction;
         var velocity = Quaternion.AngleAxis(cameraAngle, Vector3.up) * rawVelocity;
 
-        if (canMove)
+        // if (CanMove)
+        // {
+        // if (!_isDashing && velocity.magnitude <= _deadZoneSize)
+        // {
+        // _velocity = Vector3.zero;
+        // }
+        // else if (!_isDashing)
+        // {
+        // _velocity = velocity;
+        // }
+        // }
+
+        if (CanMove)
         {
-            if (!_isDashing && velocity.magnitude <= _deadZoneSize)
-            {
+            if (velocity.magnitude <= _deadZoneSize)
                 _velocity = Vector3.zero;
-            }
-            else if (!_isDashing)
-            {
+            else
                 _velocity = velocity;
-            }
         }
 
         var velocityModifier = 1f;
-        if (_isDashing)
+        if (_playerAbilityController.IsDashing)
             velocityModifier *= dashSpeedBoost;
 
         // _rigidbody.velocity = _velocity * (speed * velocityModifier);
@@ -116,7 +128,16 @@ public class PlayerController : MonoBehaviour
             return;
 
 
-        _characterController.Move(_velocity * (speed * Time.deltaTime * velocityModifier));
+        var downVelocity = Vector3.zero;
+        if (!_characterController.isGrounded && !_playerAbilityController.IsDashing)
+        {
+            downVelocity += Vector3.down * (fallingSpeed * Time.deltaTime);
+        }
+
+        _characterController.Move(_velocity * (speed * Time.deltaTime * velocityModifier) + downVelocity);
+        controllerVelocity = _characterController.velocity;
+
+
     }
 
     void Move(Vector3 movement)
@@ -220,7 +241,6 @@ public class PlayerController : MonoBehaviour
             transform.Rotate(Vector3.up, _angle * rotationSpeed * Time.deltaTime);
         }
 
-        _timeSinceLastDash += Time.deltaTime;
         // angle = Vector3.Angle(Vector3.up, transform.forward);
         // velocityAngle = Vector3.Angle(Vector3.up,velocity);
         // transform.rotation = Quaternion.Euler();
@@ -235,26 +255,24 @@ public class PlayerController : MonoBehaviour
 
     void OnDash()
     {
-        if (_isDashing || _timeSinceLastDash < dashCooldown)
-            return;
-        StartCoroutine(Dash());
+        _playerAbilityController.Dash();
     }
 
-    IEnumerator Dash()
-    {
-        // Debug.Log($"start dash ({Time.time})");
-        _animator.SetTrigger(DashTriggerHash);
-        _animator.SetFloat(DashSpeedHash, 1 / dashDurationMultiplier);
-        _isDashing = true;
-        if (_velocity.magnitude == 0)
-            _velocity = transform.forward;
-        _velocity.Normalize();
-
-        yield return new WaitForSeconds(_baseDashDuration * dashDurationMultiplier);
-        _isDashing = false;
-        _timeSinceLastDash = 0;
-        // Debug.Log($"end dash ({Time.time})");
-    }
+    // IEnumerator Dash()
+    // {
+    //     // Debug.Log($"start dash ({Time.time})");
+    //     _animator.SetTrigger(DashTriggerHash);
+    //     _animator.SetFloat(DashSpeedHash, 1 / dashDurationMultiplier);
+    //     _isDashing = true;
+    //     if (_velocity.magnitude == 0)
+    //         _velocity = transform.forward;
+    //     _velocity.Normalize();
+    //
+    //     yield return new WaitForSeconds(_baseDashDuration * dashDurationMultiplier);
+    //     _isDashing = false;
+    //     _timeSinceLastDash = 0;
+    //     // Debug.Log($"end dash ({Time.time})");
+    // }
 
     void OnMove(InputValue value)
     {
@@ -303,13 +321,7 @@ public class PlayerController : MonoBehaviour
     // }
 
     public void FollowSequence(AnimationSequence sequence) => StartCoroutine(_playerAnimationController.FollowSequence(sequence));
-    
 
-
-    public bool Won { get; protected set; }
-
-
-    public Interactible InteractionTarget => _interactionTarget;
 
     private void FixedUpdate()
     {

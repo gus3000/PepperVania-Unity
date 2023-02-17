@@ -53,7 +53,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98c274a32c1f4493b3dec3850d99fff9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  duration: 1
+  _animationSteps:
+  - duration: 1
+    pouet: ha
+  - duration: 1
+    pouet: ha
+  _stepDebug:
+    duration: 1
+    pouet: ha
+  pouet: 
 --- !u!114 &1995644787987114409
 MonoBehaviour:
   m_ObjectHideFlags: 0

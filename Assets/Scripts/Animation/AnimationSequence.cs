@@ -6,16 +6,20 @@ namespace Animation
 {
     public class AnimationSequence : MonoBehaviour
     {
-        [SerializeField] private float duration = 1f;
+        [SerializeField] private AnimationStep[] _animationSteps;
+        [SerializeField] private AnimationStep _stepDebug;
+
+        public string pouet;
 
         // [SerializeField] private Vector3[] sequence;
-        private BezierCurve _curve;
-        private AnimationStep[] _animationSteps;
+        // private BezierCurve _curve;
 
         private int _currentStep;
+
         private void Start()
         {
-            _curve = GetComponent<BezierCurve>();
+            // _curve = GetComponent<BezierCurve>();
+            Debug.Log($"Total duration : {TotalDuration}");
         }
 
         private void OnDrawGizmosSelected()
@@ -23,7 +27,15 @@ namespace Animation
             Gizmos.color = Color.black;
         }
 
-        public Vector3 GetPoint(float timeSinceStart) => _curve.GetPointAt(timeSinceStart / duration);
+        public Vector3 GetPoint(float timeSinceStart)
+        {
+            if (IsOver(timeSinceStart))
+                return Vector3.zero;
+
+            var (step, timeSinceAnimStart) = GetCurrentAnimationStep(timeSinceStart);
+            return step.GetPoint(timeSinceAnimStart);
+            // return _curve.GetPointAt(timeSinceStart / duration);
+        }
 
         public AnimationStep First()
         {
@@ -39,32 +51,26 @@ namespace Animation
             _currentStep++;
             if (_currentStep >= _animationSteps.Length)
                 return null;
-            
+
             return _animationSteps[_currentStep];
         }
 
-        public AnimationStep GetCurrentAnimationStep(float timeSinceStart)
+        public (AnimationStep, float) GetCurrentAnimationStep(float timeSinceStart)
         {
             float acc = 0f;
             foreach (var animationStep in _animationSteps)
             {
                 acc += animationStep.Duration;
                 if (timeSinceStart < acc)
-                    return animationStep;
+                    return (animationStep, timeSinceStart - acc);
             }
 
-            return null;
+            return (null, timeSinceStart);
         }
 
-        public Quaternion GetRotation(float timeSinceStart)
-        {
-            var delta = 0.001f;
-            var percent = timeSinceStart / duration;
-            var currentPoint = _curve.GetPointAt(percent);
-            var lastPoint = _curve.GetPointAt(percent - delta);
-            return Quaternion.LookRotation(currentPoint - lastPoint);
-        }
 
-        public bool IsOver(float timeSinceStart) => timeSinceStart > duration;
+        public float TotalDuration => _animationSteps.Select(a => a.Duration).Sum();
+
+        public bool IsOver(float timeSinceStart) => timeSinceStart > TotalDuration;
     }
 }
