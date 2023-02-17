@@ -41,6 +41,8 @@ public class UiController : MonoBehaviour
 
     private void Update()
     {
+        Debug.Log($"{Time.time} - {_gameController.StartTime} > {showControlsTimer} ? {Time.time - _gameController.StartTime > showControlsTimer}");
+        Debug.Log($"player has moved ? {_player.HasMoved}");
         // if(ShouldShowControlsPanel && !_controlsShowing)
         // ShowControls();
         // else if(ShouldHideControlsPanel && _controlsShowing)
@@ -72,7 +74,7 @@ public class UiController : MonoBehaviour
                 var canvasGroup = go.GetComponent<CanvasGroup>();
                 if (canvasGroup == null)
                     continue;
-                canvasGroup.alpha = 1;
+                // canvasGroup.alpha = 1;
             }
         }
 
