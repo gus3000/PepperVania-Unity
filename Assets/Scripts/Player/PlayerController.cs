@@ -18,14 +18,15 @@ using UnityEngine.TextCore.Text;
 [RequireComponent(typeof(PlayerAbilityController))]
 public class PlayerController : MonoBehaviour
 {
+    private const float DeadZoneSize = 0.05f;
+
     public Vector3 controllerVelocity;
 
     [SerializeField, Tooltip("in m/s")] private float speed = 2;
     [SerializeField] private float rotationSpeed = 10f;
     [SerializeField] private float fallingSpeed = 3f; //TODO replace with curve
-    [SerializeField] private float dashSpeedBoost = 2f;
-    
-    private bool CanMove => _playerAnimationController.CanMove && _playerAbilityController.CanMove;
+
+    private bool CanMove => _playerAnimationController.CanMove && !_playerAbilityController.IsMovementHandledByAbility();
 
     private Animator _animator;
     private PlayerInput _playerInput;
@@ -43,8 +44,8 @@ public class PlayerController : MonoBehaviour
     private PlayerAnimationController _playerAnimationController;
     private PlayerAbilityController _playerAbilityController;
     private CharacterController _characterController;
-    private float _deadZoneSize = 0.05f;
     private Vector2 _inputMovement;
+    private Vector3 _inputVelocity;
 
 
     private static readonly int SpeedAnimHash = Animator.StringToHash("speed");
@@ -60,7 +61,7 @@ public class PlayerController : MonoBehaviour
         set => _velocity = value;
     }
 
-    void Start()
+    void Awake()
     {
         _playerInput = GetComponent<PlayerInput>();
         _velocity = Vector3.zero;
@@ -68,7 +69,6 @@ public class PlayerController : MonoBehaviour
         _animator = GetComponentInChildren<Animator>();
         _inputMovement = Vector2.zero;
         _gameController = GameObject.FindWithTag("GameController").GetComponent<GameController>();
-        // _rigidbody = GetComponent<Rigidbody>();
         _playerCollider = GetComponent<CapsuleCollider>();
         _characterController = GetComponent<CharacterController>();
         _playerAnimationController = GetComponent<PlayerAnimationController>();
@@ -94,7 +94,8 @@ public class PlayerController : MonoBehaviour
         //rotate velocity according to camera
         var rawVelocity = new Vector3(_inputMovement.x, 0, _inputMovement.y);
         var cameraAngle = (int)_camera.Direction;
-        var velocity = Quaternion.AngleAxis(cameraAngle, Vector3.up) * rawVelocity;
+        
+        _inputVelocity = Quaternion.AngleAxis(cameraAngle, Vector3.up) * rawVelocity;
 
         // if (CanMove)
         // {
@@ -108,17 +109,24 @@ public class PlayerController : MonoBehaviour
         // }
         // }
 
+        // Debug.Log($"CanMove ? {CanMove}");
+        // Debug.Log($"Move by ability ? {_playerAbilityController.IsMovementHandledByAbility()}");
+
         if (CanMove)
         {
-            if (velocity.magnitude <= _deadZoneSize)
-                _velocity = Vector3.zero;
-            else
-                _velocity = velocity;
+            if (_inputVelocity.magnitude <= DeadZoneSize)
+                _inputVelocity = Vector3.zero;
+            _velocity = _inputVelocity;
+
+        }
+        else if (_playerAbilityController.IsMovementHandledByAbility())
+        {
+            _velocity = _playerAbilityController.GetVelocity();
         }
 
         var velocityModifier = 1f;
-        if (_playerAbilityController.IsDashing)
-            velocityModifier *= dashSpeedBoost;
+        // if (_playerAbilityController.IsDashing)
+        // velocityModifier *= dashSpeedBoost;
 
         // _rigidbody.velocity = _velocity * (speed * velocityModifier);
         // _rigidbody.AddForce(_velocity * (speed * velocityModifier), ForceMode.VelocityChange);
@@ -136,8 +144,6 @@ public class PlayerController : MonoBehaviour
 
         _characterController.Move(_velocity * (speed * Time.deltaTime * velocityModifier) + downVelocity);
         controllerVelocity = _characterController.velocity;
-
-
     }
 
     void Move(Vector3 movement)
@@ -235,16 +241,11 @@ public class PlayerController : MonoBehaviour
     void HandleAnimations()
     {
         _animator.SetFloat(SpeedAnimHash, _velocity.magnitude);
-        if (_velocity.magnitude > 0)
+        if (_inputVelocity.magnitude > 0)
         {
-            _angle = Vector3.SignedAngle(transform.forward, _velocity, Vector3.up);
+            _angle = Vector3.SignedAngle(transform.forward, _inputVelocity, Vector3.up);
             transform.Rotate(Vector3.up, _angle * rotationSpeed * Time.deltaTime);
         }
-
-        // angle = Vector3.Angle(Vector3.up, transform.forward);
-        // velocityAngle = Vector3.Angle(Vector3.up,velocity);
-        // transform.rotation = Quaternion.Euler();
-        // transform.forward = Vector3.Lerp(transform.forward, velocity, 1);
     }
 
     void OnJump()
@@ -253,9 +254,19 @@ public class PlayerController : MonoBehaviour
         Debug.Log(_playerInput.currentControlScheme);
     }
 
-    void OnDash()
+    public void OnDash(InputAction.CallbackContext context)
     {
-        _playerAbilityController.Dash();
+        Debug.Log($"Dash with context : {context}");
+        if (context.phase == InputActionPhase.Performed)
+        {
+            Debug.Log("prepare to pounce");
+            _playerAbilityController.Crouch();
+        }
+        else if (context.phase == InputActionPhase.Canceled)
+        {
+            Debug.Log("Pounce !");
+            _playerAbilityController.Dash();
+        }
     }
 
     // IEnumerator Dash()
@@ -274,13 +285,22 @@ public class PlayerController : MonoBehaviour
     //     // Debug.Log($"end dash ({Time.time})");
     // }
 
-    void OnMove(InputValue value)
+
+    public void OnMove(InputAction.CallbackContext context)
     {
+        // Debug.Log($"Move {context}");
+        _inputMovement = context.ReadValue<Vector2>();
         HasMoved = true;
-        _inputMovement = value.Get<Vector2>();
     }
 
-    void OnControlsChanged()
+    // old move type
+    // public void OnMove(InputValue value)
+    // {
+    //     HasMoved = true;
+    //     _inputMovement = value.Get<Vector2>();
+    // }
+
+    public void OnControlsChanged()
     {
         if (_playerInput == null)
             return; //not started yet

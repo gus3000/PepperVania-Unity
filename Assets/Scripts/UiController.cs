@@ -41,8 +41,8 @@ public class UiController : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log($"{Time.time} - {_gameController.StartTime} > {showControlsTimer} ? {Time.time - _gameController.StartTime > showControlsTimer}");
-        Debug.Log($"player has moved ? {_player.HasMoved}");
+        // Debug.Log($"{Time.time} - {_gameController.StartTime} > {showControlsTimer} ? {Time.time - _gameController.StartTime > showControlsTimer}");
+        // Debug.Log($"player has moved ? {_player.HasMoved}");
         // if(ShouldShowControlsPanel && !_controlsShowing)
         // ShowControls();
         // else if(ShouldHideControlsPanel && _controlsShowing)

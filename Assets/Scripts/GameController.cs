@@ -11,7 +11,7 @@ public class GameController : MonoBehaviour
     private UiController _uiController;
     public float StartTime { get; private set; }
 
-    private void Start()
+    private void Awake()
     {
         _player = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
         _uiController = GameObject.FindWithTag("UICanvas").GetComponent<UiController>();
@@ -25,6 +25,9 @@ public class GameController : MonoBehaviour
 
     public void ChangeControls()
     {
+        if (_uiController == null)
+            return;
+        
         _uiController.ConfigureUi();
     }
 }

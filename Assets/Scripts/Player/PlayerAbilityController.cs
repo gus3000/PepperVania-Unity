@@ -8,15 +8,16 @@ namespace Player
     {
         [SerializeField] private float dashCooldown = 1f;
         [SerializeField] private float dashDurationMultiplier = 1f;
+        [SerializeField] private float dashSpeedBoost = 2f;
 
         //serialized for debug purposes but shouldn't be
-        [SerializeField] private bool canMove = true;
         [SerializeField] private float _timeSinceLastDash = 0;
         [SerializeField] private bool _isDashing;
+        [SerializeField] private bool _isCrouching;
+        
 
         private PlayerController _playerController;
         private PlayerAnimationController _playerAnimationController;
-        public bool CanMove => canMove;
         public bool IsDashing => _isDashing;
 
         private void Start()
@@ -25,9 +26,13 @@ namespace Player
             _playerAnimationController = GetComponent<PlayerAnimationController>();
         }
 
+        public void Crouch()
+        {
+            _isCrouching = true;
+        }
         public void Dash()
         {
-            if (!CanMove || _timeSinceLastDash < dashCooldown)
+            if (_timeSinceLastDash < dashCooldown)
                 return;
             StartCoroutine(DashCoroutine());
         }
@@ -37,7 +42,7 @@ namespace Player
             // Debug.Log($"start dash ({Time.time})");
             _playerAnimationController.TriggerDash(dashDurationMultiplier);
             _isDashing = true;
-            canMove = false;
+            _isCrouching = false;
             var velocity = _playerController.Velocity;
             if (velocity.magnitude == 0)
                 velocity = transform.forward;
@@ -46,9 +51,22 @@ namespace Player
 
             yield return new WaitForSeconds(_playerAnimationController.GetDashDuration());
             _isDashing = false;
-            canMove = true;
             _timeSinceLastDash = 0;
             // Debug.Log($"end dash ({Time.time})");
+        }
+
+        public bool IsMovementHandledByAbility()
+        {
+            return _isCrouching || _isDashing;
+        }
+
+        public Vector3 GetVelocity()
+        {
+            if (_isDashing)
+                return transform.forward * dashSpeedBoost;
+            if (_isCrouching)
+                return Vector3.zero;
+            return Vector3.zero;
         }
 
         private void Update()
