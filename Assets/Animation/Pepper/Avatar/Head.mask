@@ -1,0 +1,179 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!319 &31900000
+AvatarMask:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Head
+  m_Mask: 00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
+  m_Elements:
+  - m_Path: 
+    m_Weight: 1
+  - m_Path: Backup
+    m_Weight: 0
+  - m_Path: Backup/Body
+    m_Weight: 0
+  - m_Path: Backup/Body/Head
+    m_Weight: 0
+  - m_Path: Backup/Body/Head/ear.l
+    m_Weight: 0
+  - m_Path: Backup/Body/Head/ear.l/ear.l_end
+    m_Weight: 0
+  - m_Path: Backup/Body/Head/ear.r
+    m_Weight: 0
+  - m_Path: Backup/Body/Head/ear.r/ear.r_end
+    m_Weight: 0
+  - m_Path: Backup/Body/leg.f.l
+    m_Weight: 0
+  - m_Path: Backup/Body/leg.f.l/shin.f.l
+    m_Weight: 0
+  - m_Path: Backup/Body/leg.f.l/shin.f.l/shin.f.l_end
+    m_Weight: 0
+  - m_Path: Backup/Body/leg.f.r
+    m_Weight: 0
+  - m_Path: Backup/Body/leg.f.r/shin.f.r
+    m_Weight: 0
+  - m_Path: Backup/Body/leg.f.r/shin.f.r/shin.f.r_end
+    m_Weight: 0
+  - m_Path: Backup/Body/leg.r.l
+    m_Weight: 0
+  - m_Path: Backup/Body/leg.r.l/shin.r.l
+    m_Weight: 0
+  - m_Path: Backup/Body/leg.r.l/shin.r.l/shin.r.l_end
+    m_Weight: 0
+  - m_Path: Backup/Body/leg.r.r
+    m_Weight: 0
+  - m_Path: Backup/Body/leg.r.r/shin.r.r
+    m_Weight: 0
+  - m_Path: Backup/Body/leg.r.r/shin.r.r/shin.r.r_end
+    m_Weight: 0
+  - m_Path: Backup/Body/Tail Base
+    m_Weight: 0
+  - m_Path: Backup/Body/Tail Base/Tail Mid
+    m_Weight: 0
+  - m_Path: Backup/Body/Tail Base/Tail Mid/Tail Tip
+    m_Weight: 0
+  - m_Path: Backup/Body/Tail Base/Tail Mid/Tail Tip/Tail Tip_end
+    m_Weight: 0
+  - m_Path: Backup/footIK.f.l
+    m_Weight: 0
+  - m_Path: Backup/footIK.f.l/footIK.f.l_end
+    m_Weight: 0
+  - m_Path: Backup/footIK.f.r
+    m_Weight: 0
+  - m_Path: Backup/footIK.f.r/footIK.f.r_end
+    m_Weight: 0
+  - m_Path: Backup/footIK.r.l
+    m_Weight: 0
+  - m_Path: Backup/footIK.r.l/footIK.r.l_end
+    m_Weight: 0
+  - m_Path: Backup/footIK.r.r
+    m_Weight: 0
+  - m_Path: Backup/footIK.r.r/footIK.r.r_end
+    m_Weight: 0
+  - m_Path: Backup/kneeIK.f.l
+    m_Weight: 0
+  - m_Path: Backup/kneeIK.f.l/kneeIK.f.l_end
+    m_Weight: 0
+  - m_Path: Backup/kneeIK.f.r
+    m_Weight: 0
+  - m_Path: Backup/kneeIK.f.r/kneeIK.f.r_end
+    m_Weight: 0
+  - m_Path: Backup/kneeIK.r.l
+    m_Weight: 0
+  - m_Path: Backup/kneeIK.r.l/kneeIK.r.l_end
+    m_Weight: 0
+  - m_Path: Backup/kneeIK.r.r
+    m_Weight: 0
+  - m_Path: Backup/kneeIK.r.r/kneeIK.r.r_end
+    m_Weight: 0
+  - m_Path: Body
+    m_Weight: 0
+  - m_Path: PepperArmature
+    m_Weight: 0
+  - m_Path: PepperArmature/Body
+    m_Weight: 0
+  - m_Path: PepperArmature/Body/Head
+    m_Weight: 1
+  - m_Path: PepperArmature/Body/Head/ear.l
+    m_Weight: 1
+  - m_Path: PepperArmature/Body/Head/ear.l/ear.l_end
+    m_Weight: 1
+  - m_Path: PepperArmature/Body/Head/ear.r
+    m_Weight: 1
+  - m_Path: PepperArmature/Body/Head/ear.r/ear.r_end
+    m_Weight: 1
+  - m_Path: PepperArmature/Body/Head/eye.l
+    m_Weight: 1
+  - m_Path: PepperArmature/Body/Head/eye.l/eye.l_end
+    m_Weight: 1
+  - m_Path: PepperArmature/Body/Head/eye.r
+    m_Weight: 1
+  - m_Path: PepperArmature/Body/Head/eye.r/eye.r_end
+    m_Weight: 1
+  - m_Path: PepperArmature/Body/Head/eyelid.d.l
+    m_Weight: 1
+  - m_Path: PepperArmature/Body/Head/eyelid.d.l/eyelid.d.l_end
+    m_Weight: 1
+  - m_Path: PepperArmature/Body/Head/eyelid.d.r
+    m_Weight: 1
+  - m_Path: PepperArmature/Body/Head/eyelid.d.r/eyelid.d.r_end
+    m_Weight: 1
+  - m_Path: PepperArmature/Body/Head/eyelid.u.l
+    m_Weight: 1
+  - m_Path: PepperArmature/Body/Head/eyelid.u.l/eyelid.u.l_end
+    m_Weight: 1
+  - m_Path: PepperArmature/Body/Head/eyelid.u.r
+    m_Weight: 1
+  - m_Path: PepperArmature/Body/Head/eyelid.u.r/eyelid.u.r_end
+    m_Weight: 1
+  - m_Path: PepperArmature/Body/Head/whisker.up.l
+    m_Weight: 1
+  - m_Path: PepperArmature/Body/Head/whisker.up.l/whisker.up.l_end
+    m_Weight: 1
+  - m_Path: PepperArmature/Body/Head/whisker.up.l.001
+    m_Weight: 1
+  - m_Path: PepperArmature/Body/Head/whisker.up.l.001/whisker.up.l.001_end
+    m_Weight: 1
+  - m_Path: PepperArmature/Body/Head/whisker.up.r
+    m_Weight: 1
+  - m_Path: PepperArmature/Body/Head/whisker.up.r/whisker.up.r_end
+    m_Weight: 1
+  - m_Path: PepperArmature/Body/Head/whisker.up.r.001
+    m_Weight: 1
+  - m_Path: PepperArmature/Body/Head/whisker.up.r.001/whisker.up.r.001_end
+    m_Weight: 1
+  - m_Path: PepperArmature/Body/leg.f.l
+    m_Weight: 0
+  - m_Path: PepperArmature/Body/leg.f.l/leg.f.l_end
+    m_Weight: 0
+  - m_Path: PepperArmature/Body/leg.f.r
+    m_Weight: 0
+  - m_Path: PepperArmature/Body/leg.f.r/leg.f.r_end
+    m_Weight: 0
+  - m_Path: PepperArmature/Body/leg.r.l
+    m_Weight: 0
+  - m_Path: PepperArmature/Body/leg.r.l/leg.r.l_end
+    m_Weight: 0
+  - m_Path: PepperArmature/Body/leg.r.r
+    m_Weight: 0
+  - m_Path: PepperArmature/Body/leg.r.r/leg.r.r_end
+    m_Weight: 0
+  - m_Path: PepperArmature/Body/Tail Base
+    m_Weight: 0
+  - m_Path: PepperArmature/Body/Tail Base/Tail Mid
+    m_Weight: 0
+  - m_Path: PepperArmature/Body/Tail Base/Tail Mid/Tail Tip
+    m_Weight: 0
+  - m_Path: PepperArmature/Body/Tail Base/Tail Mid/Tail Tip/Tail Tip_end
+    m_Weight: 0
+  - m_Path: PepperArmature/Body/tail.midIK
+    m_Weight: 0
+  - m_Path: PepperArmature/Body/tail.midIK/tail.midIK_end
+    m_Weight: 0
+  - m_Path: PepperArmature/Body/tail.tipIK
+    m_Weight: 0
+  - m_Path: PepperArmature/Body/tail.tipIK/tail.tipIK_end
+    m_Weight: 0

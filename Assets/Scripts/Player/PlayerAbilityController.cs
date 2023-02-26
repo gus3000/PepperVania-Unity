@@ -28,6 +28,8 @@ namespace Player
 
         public void Crouch()
         {
+            if (_isDashing)
+                return;
             _isCrouching = true;
         }
         public void Dash()

@@ -309,7 +309,7 @@ public class PlayerController : MonoBehaviour
         _gameController.ChangeControls();
     }
 
-    void OnInteract()
+    public void OnInteract()
     {
         Debug.Log("Interact");
         if (_interactionTarget == null)
